@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>McDonalds</title>
+</head>
+<body>
+
+<div th:replace="~{fragments :: header}"></div>
+
+<h1>Log in</h1>
+<div class="login-container">
+    <h1>Logowanie</h1>
+    <form th:action="@{/login}" method="post">
+        <label for="username">Nazwa użytkownika</label>
+        <input type="text" id="username" name="username" placeholder="Wprowadź nazwę użytkownika" required>
+
+        <label for="password">Hasło</label>
+        <input type="password" id="password" name="password" placeholder="Wprowadź hasło" required>
+
+        <button type="submit">Zaloguj się</button>
+    </form>
+</div>
+
+
+
+</body>
+</html>

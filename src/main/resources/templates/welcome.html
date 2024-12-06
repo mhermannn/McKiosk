@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>McDonalds</title>
+</head>
+<body>
+
+<div th:replace="~{fragments :: header}"></div>
+
+<h1>Welcome to McDonalds!</h1>
+<!--dodaj tutaj zdjęcie reklamy-->
+
+<a th:href="@{/login}">Sign In</a>
+<a th:href="@{/productlist}">Product List</a>
+
+
+
+</body>
+</html>
