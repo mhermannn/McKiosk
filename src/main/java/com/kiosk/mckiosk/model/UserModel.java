@@ -5,9 +5,12 @@ import java.util.*;
 public class UserModel {
     private final List<User> users = new ArrayList<User>();
     private int currentId = 0;
+
     public List<User> getAllUsers(){ return users;}
+
     public Optional<User> getUserById(int id){
         return users.stream().filter(user -> user.getId() == id).findFirst();
+
     }
     public User addUser(User user) {
         user.setId(++currentId);
