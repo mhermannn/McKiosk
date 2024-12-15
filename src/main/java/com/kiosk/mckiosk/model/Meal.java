@@ -8,12 +8,16 @@ public class Meal {
     private MealCategories category;
     private String price;
     private List<Ingredient> ingredients;
-    public Meal(int id, String name, MealCategories category, String price, Ingredient ingredients) {
+    public Meal(int id, String name, MealCategories category, String price, List<Ingredient> ingredients) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.price = price;
-        this.ingredients = new ArrayList<>();
+        this.ingredients = ingredients;
+    }
+    @Override
+    public String toString() {
+        return id+ ". " +name + ", " + category + ", " + price;
     }
     public int getId() {return id;}
     public void setId(int id) {this.id = id;}

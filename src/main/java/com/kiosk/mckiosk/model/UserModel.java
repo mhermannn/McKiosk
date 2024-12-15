@@ -31,19 +31,14 @@ public class UserModel {
         }
     }
 
-    public User updateUserType(int id, User updatedUser) {
-        Optional<User> existingUser = getUserById(id);
-        if (existingUser.isPresent()) {
-            User user = existingUser.get();
-            user.setAccountType(AccountType.ADMIN);
-            System.out.println("Updated user " + user + " to admin");
-            return user;
-        } else {
-            throw new NoSuchElementException("User not found with ID: " + id);
-        }
-    }
-
     public boolean deleteUser(int id) {
         return users.removeIf(user -> user.getId() == id);
+    }
+
+    public User authenticate(String username, String password) {
+        return users.stream()
+                .filter(user -> user.getLogin().equals(username) && user.getPassword().equals(password))
+                .findFirst()
+                .orElse(null);
     }
 }
