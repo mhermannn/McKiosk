@@ -1,37 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <title>Lista Produktów</title>
 </head>
 <body>
+
 <header>
-    <div th:if="${loggedUser != null}">
-        <p>Jesteś zalogowany jako: <span th:text="${loggedUser.username}"></span></p>
+    <div sec:authorize="isAuthenticated()">
+        <p>Jesteś zalogowany jako: <span sec:authentication="name"></span></p>
         <form th:action="@{/logout}" method="post">
             <button type="submit">Wyloguj</button>
         </form>
     </div>
-    <div th:if="${loggedUser == null}">
+    <div sec:authorize="!isAuthenticated()">
         <a th:href="@{/login}">Zaloguj się</a>
     </div>
 </header>
 
-<h1>Lista Produktów</h1>
-<table border="1">
-    <thead>
-    <tr>
-        <th>Nazwa</th>
-        <th>Rodzaj</th>
-        <th>Cena</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="meal : ${meals}">
-        <td th:text="${meal.name}"></td>
-        <td th:text="${meal.category}"></td>
-        <td th:text="${meal.price}"></td>
-    </tr>
-    </tbody>
-</table>
+<h1>LISTA!!!!!</h1>
+
+<!--<h1>Lista Produktów</h1>-->
+<!--<table border="1">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>Nazwa</th>-->
+<!--        <th>Rodzaj</th>-->
+<!--        <th>Cena</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="meal : ${meals}">-->
+<!--        <td th:text="${meal.name}"></td>-->
+<!--        <td th:text="${meal.category}"></td>-->
+<!--        <td th:text="${meal.price}"></td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+
 </body>
 </html>

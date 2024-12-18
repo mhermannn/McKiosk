@@ -2,6 +2,7 @@ package com.kiosk.mckiosk.controller;
 
 import com.kiosk.mckiosk.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import com.kiosk.mckiosk.service.KioskService;
 
@@ -29,8 +30,10 @@ public class UserController {
     }
 
     @PostMapping
-    public User addUser(@RequestBody User user) {
-        return kioskService.getUserModel().addUser(user);
+    public User addUser(@RequestBody User user, PasswordEncoder passwordEncoder) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return kioskService.getUserModel().addUser(user, passwordEncoder);
+
     }
 
     @PutMapping("/{id}")
@@ -43,10 +46,3 @@ public class UserController {
         kioskService.getUserModel().deleteUser(id);
     }
 }
-
-
-
-
-
-
-

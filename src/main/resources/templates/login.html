@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>McDonalds - Log In</title>
+    <title>McKiosk - Logowanie</title>
 </head>
 <body>
-<h1>Log in</h1>
+<h1>Logowanie</h1>
 
+<!-- Logowanie za pomocą Google -->
+<a href="/oauth2/authorization/google" style="display: block; margin-bottom: 20px;">
+    <button>Zaloguj się przez Google</button>
+</a>
+
+<div th:if="${error}" style="color: red;">
+    <p th:text="${error}"></p>
+</div>
+<div th:if="${param.error}" style="color: red;">
+    <p>Błędny login lub hasło!</p>
+</div>
+<!-- Logowanie lokalne -->
 <div class="login-container">
     <form th:action="@{/login}" method="post">
         <label for="username">Nazwa użytkownika</label>
@@ -16,10 +28,8 @@
 
         <button type="submit">Zaloguj się</button>
     </form>
-</div>
 
-<div th:if="${error}">
-    <p style="color: red;" th:text="${error}"></p>
+
 </div>
 </body>
 </html>

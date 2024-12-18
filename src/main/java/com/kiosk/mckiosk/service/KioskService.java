@@ -3,6 +3,7 @@ package com.kiosk.mckiosk.service;
 import com.kiosk.mckiosk.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -18,13 +19,15 @@ public class KioskService {
     private final IngredientModel ingredientModel;
 
     @Autowired
-    public KioskService(@Qualifier("admin") User admin) {
+    public KioskService(UserModel userModel, @Qualifier("admin") User admin, PasswordEncoder passwordEncoder) {
         this.ingredientModel = new IngredientModel();
         this.mealModel = new MealModel(ingredientModel);
-        this.userModel = new UserModel();
+        this.userModel = userModel;
 
-        userModel.addUser(admin);
-        System.out.println("\nWstrzyknięty użytkownik: " + admin);
+        userModel.addUser(admin, passwordEncoder);
+
+//        System.out.println("\nWstrzyknięty użytkownik: " + admin);
+//        System.out.println("Current users: KioskService dodanie " + userModel.getAllUsers());
     }
 
     public UserModel getUserModel() {
@@ -60,7 +63,7 @@ public class KioskService {
                 Meal meal = new Meal(id, name, category, price, ingredients);
                 mealModel.addMeal(meal);
             }
-        } catch (IOException | IllegalArgumentException e) {   //usunelam NumberFormatException
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }

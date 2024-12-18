@@ -15,4 +15,3 @@ public class HttpService {
         return restTemplate.getForObject(url, String.class);
     }
 }
-

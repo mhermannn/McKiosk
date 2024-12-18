@@ -1,7 +1,11 @@
 package com.kiosk.mckiosk.model;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
 import java.util.*;
 
+@Component
 public class UserModel {
     private final List<User> users = new ArrayList<User>();
     private int currentId = 0;
@@ -12,9 +16,12 @@ public class UserModel {
         return users.stream().filter(user -> user.getId() == id).findFirst();
 
     }
-    public User addUser(User user) {
+    public User addUser(User user, PasswordEncoder passwordEncoder) {
         user.setId(++currentId);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         users.add(user);
+        System.out.println("Dodano użytkownika: " + user.getLogin() + "\n");
+        System.out.println(users);
         return user;
     }
 
@@ -35,10 +42,4 @@ public class UserModel {
         return users.removeIf(user -> user.getId() == id);
     }
 
-    public User authenticate(String username, String password) {
-        return users.stream()
-                .filter(user -> user.getLogin().equals(username) && user.getPassword().equals(password))
-                .findFirst()
-                .orElse(null);
-    }
 }
