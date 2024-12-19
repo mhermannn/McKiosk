@@ -85,21 +85,25 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/oauth2/**").permitAll()
+                        .requestMatchers("/", "/login", "/oauth2/**", "/productlist").permitAll()
                         .anyRequest().authenticated()
                 )
+
                 .formLogin(form -> form
                         .loginPage("/login")
+//                        .defaultSuccessUrl("/orderType", true)
                         .defaultSuccessUrl("/productlist", true)
                         .failureHandler(new CustomAuthenticationFailureHandler())
                         .permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/login")
+//                        .defaultSuccessUrl("/orderType", true)
                         .defaultSuccessUrl("/productlist", true)
+
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/login")
+                        .logoutSuccessUrl("/welcome")
                         .permitAll()
                 )
                 .securityContext(securityContext -> securityContext
