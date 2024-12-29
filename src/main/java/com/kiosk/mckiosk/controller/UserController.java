@@ -1,10 +1,9 @@
 package com.kiosk.mckiosk.controller;
 
 import com.kiosk.mckiosk.model.User;
+import com.kiosk.mckiosk.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import com.kiosk.mckiosk.service.KioskService;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,37 +11,37 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    private final KioskService kioskService;
+    private final UserModel userModel;
 
     @Autowired
-    public UserController(KioskService kioskService) {
-        this.kioskService = kioskService;
+    public UserController(UserModel userModel) {
+        this.userModel = userModel;
     }
 
     @GetMapping
     public List<User> getAllUsers() {
-        return kioskService.getUserModel().getAllUsers();
+        return userModel.getAllUsers();
     }
 
     @GetMapping("/{id}")
     public Optional<User> getUserById(@PathVariable int id) {
-        return kioskService.getUserModel().getUserById(id);
+        return userModel.getUserById(id);
     }
 
     @PostMapping
-    public User addUser(@RequestBody User user, PasswordEncoder passwordEncoder) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return kioskService.getUserModel().addUser(user, passwordEncoder);
-
+    public User addUser(@RequestBody User user) {
+        return userModel.addUser(user);
     }
 
     @PutMapping("/{id}")
     public User updateUser(@PathVariable int id, @RequestBody User user) {
-        return kioskService.getUserModel().updateUser(id, user);
+        return userModel.updateUser(id, user);
     }
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable int id) {
-        kioskService.getUserModel().deleteUser(id);
+        if (!userModel.deleteUser(id)) {
+            throw new IllegalArgumentException("User with ID " + id + " does not exist.");
+        }
     }
 }

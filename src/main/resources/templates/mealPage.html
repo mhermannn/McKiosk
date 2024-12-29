@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Szczegóły posiłku</title>
+</head>
+<body>
+<div th:replace="~{fragments :: header}"></div>
+
+<h1 th:text="${meal.name}">Nazwa posiłku</h1>
+<p>Kategoria: <span th:text="${meal.category}"></span></p>
+<p>Cena: <span th:text="${meal.price}"></span></p>
+
+<h2>Składniki:</h2>
+<ul>
+    <li th:each="ingredient : ${meal.ingredients}" th:text="${ingredient.name}"></li>
+</ul>
+
+<a th:href="@{/productlist}">Powrót do listy</a>
+</body>
+</html>

@@ -13,9 +13,7 @@
             <button type="submit">Wyloguj</button>
         </form>
     </div>
-<!--    <div th:if="${orderType != null}">-->
-<!--        <p>Order type: <span th:text="${orderType}"></span></p>-->
-<!--    </div>-->
+    <h2 th:if="${orderType != null}">Order Type: <span th:text="${orderType}"></span></h2>
     <div th:if="${loggedUser == 'Nie jesteś zalogowany'}">
         <p>Nie jesteś zalogowany</p>
         <a th:href="@{/login}">Zaloguj się</a>
@@ -34,7 +32,9 @@
     </thead>
     <tbody>
     <tr th:each="meal : ${meals}">
-        <td th:text="${meal.name}"></td>
+        <td>
+            <a th:href="@{/meal/{id}(id=${meal.id})}" th:text="${meal.name}"></a>
+        </td>
         <td th:text="${meal.category}"></td>
         <td th:text="${meal.price}"></td>
     </tr>

@@ -6,9 +6,9 @@
 <body>
 <div th:replace="~{fragments :: header}"></div>
 <h1>What type of order would you like?</h1>
-<form action="/orderType" method="post">
-    <button type="submit" name="orderType" value="on-site">On Site</button>
-    <button type="submit" name="orderType" value="to-go">To Go</button>
+<form th:action="@{/ordertype}" method="post">
+    <button type="submit" name="orderType" value="ON_SITE">On Site</button>
+    <button type="submit" name="orderType" value="TO_GO">To Go</button>
 </form>
 </body>
 </html>

@@ -15,6 +15,4 @@ public class Ingredient {
     public String toString() {
         return id + ". " + name;
     }
-
-
 }

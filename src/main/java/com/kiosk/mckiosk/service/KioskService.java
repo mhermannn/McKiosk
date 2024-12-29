@@ -1,8 +1,9 @@
 package com.kiosk.mckiosk.service;
 
 import com.kiosk.mckiosk.model.*;
+import com.kiosk.mckiosk.repository.OrderRepository;
+import com.kiosk.mckiosk.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,27 +12,33 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class KioskService {
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    private final IngredientModel ingredientModel = new IngredientModel();
+    private final MealModel mealModel = new MealModel(ingredientModel);
+    private final OrderModel orderModel;
     private final UserModel userModel;
-    private final MealModel mealModel;
-    private final IngredientModel ingredientModel;
+    private final OrderRepository orderRepository;
 
     @Autowired
-    public KioskService(UserModel userModel, @Qualifier("admin") User admin, PasswordEncoder passwordEncoder) {
-        this.ingredientModel = new IngredientModel();
-        this.mealModel = new MealModel(ingredientModel);
+    public KioskService(UserRepository userRepository, PasswordEncoder passwordEncoder,UserModel userModel, OrderModel orderModel, OrderRepository orderRepository) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.orderModel = orderModel;
+        this.orderRepository = orderRepository;
         this.userModel = userModel;
-
-        userModel.addUser(admin, passwordEncoder);
-
-//        System.out.println("\nWstrzyknięty użytkownik: " + admin);
-//        System.out.println("Current users: KioskService dodanie " + userModel.getAllUsers());
     }
-
     public UserModel getUserModel() {
         return userModel;
+    }
+
+    public OrderModel getOrderModel() {
+        return orderModel;
     }
 
     public MealModel getMealModel() {
@@ -81,6 +88,17 @@ public class KioskService {
             }
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
+        }
+    }
+
+    public User handleOAuth2Login(String email) {
+        Optional<User> existingUser = userRepository.findByLogin(email);
+        if (existingUser.isPresent()) {
+            return existingUser.get();
+        } else {
+            User newUser = new User(email, passwordEncoder.encode("defaultPassword"));
+            newUser.setLogin(email); // Ustaw email jako login
+            return userRepository.save(newUser);
         }
     }
 }

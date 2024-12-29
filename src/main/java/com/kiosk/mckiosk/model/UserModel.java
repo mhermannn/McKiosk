@@ -1,45 +1,58 @@
 package com.kiosk.mckiosk.model;
 
+import com.kiosk.mckiosk.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Component
 public class UserModel {
-    private final List<User> users = new ArrayList<User>();
-    private int currentId = 0;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public List<User> getAllUsers(){ return users;}
-
-    public Optional<User> getUserById(int id){
-        return users.stream().filter(user -> user.getId() == id).findFirst();
-
+    public UserModel(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
-    public User addUser(User user, PasswordEncoder passwordEncoder) {
-        user.setId(++currentId);
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public Optional<User> getUserById(int id) {
+        return userRepository.findById(id);
+    }
+
+    public int getUserIdByUsername(String login) {
+        return userRepository.findByLogin(login)
+                .orElseThrow(() -> new NoSuchElementException("User not found with login: " + login))
+                .getId();
+    }
+
+    public User addUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        users.add(user);
-        System.out.println("Dodano użytkownika: " + user.getLogin() + "\n");
-        System.out.println(users);
-        return user;
+        User savedUser = userRepository.save(user);
+        System.out.println("Dodano użytkownika: " + savedUser.getLogin() + "\n");
+        return savedUser;
     }
 
     public User updateUser(int id, User updatedUser) {
-        Optional<User> existingUser = getUserById(id);
-        if (existingUser.isPresent()) {
-            User user = existingUser.get();
-            user.setLogin(updatedUser.getLogin());
-            user.setPassword(updatedUser.getPassword());
-            System.out.println("Updated personModel: " + user);
-            return user;
-        } else {
-            throw new NoSuchElementException("User not found with ID: " + id);
-        }
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + id));
+
+        existingUser.setLogin(updatedUser.getLogin());
+        existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        return userRepository.save(existingUser);
     }
 
     public boolean deleteUser(int id) {
-        return users.removeIf(user -> user.getId() == id);
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
-
 }

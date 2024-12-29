@@ -19,13 +19,12 @@ public class McKioskApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("\nPosiłki z pliku CSV:");
-        kioskService.loadMealsFromCSV("src/main/resources/MEALS.csv");
-        kioskService.getMealModel().getAllMeals().forEach(System.out::println);
-
         System.out.println("\nSkładniki z pliku CSV:");
         kioskService.loadIngredientsFromCSV("src/main/resources/INGREDIENTS.csv");
         kioskService.getIngredientModel().getAllIngredients().forEach(System.out::println);
 
+        System.out.println("\nPosiłki z pliku CSV:");
+        kioskService.loadMealsFromCSV("src/main/resources/MEALS.csv");
+        kioskService.getMealModel().getAllMeals().forEach(System.out::println);
     }
 }

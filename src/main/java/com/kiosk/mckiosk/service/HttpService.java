@@ -9,6 +9,7 @@ public class HttpService {
 
     public HttpService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
+        System.out.println("HttpService initialized.");
     }
 
     public String makeRequest(String url) {
