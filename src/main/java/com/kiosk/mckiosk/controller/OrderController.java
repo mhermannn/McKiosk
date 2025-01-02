@@ -30,6 +30,7 @@ public class OrderController {
 
     @PutMapping("/{id}")
     public Order updateOrder(@PathVariable int id, @RequestBody Order order) {
+        System.out.println("id: " + id + " order: " + order + "in OrderController");
         return kioskService.getOrderModel().updateOrder(id, order);
     }
 

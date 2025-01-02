@@ -2,6 +2,42 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <title>Lista Produktów</title>
+    <style>
+        .meal-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .meal-item {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            width: 200px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .meal-item button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 3px;
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .meal-item button:hover {
+            background-color: #0056b3;
+        }
+
+        .meal-item p {
+            margin: 5px 0;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="~{fragments :: header}"></div>
@@ -9,9 +45,15 @@
 <header>
     <div th:if="${loggedUser != 'Nie jesteś zalogowany'}">
         <p>Jesteś zalogowany jako: <span th:text="${loggedUser}"></span></p>
+        <p>Koszyk: <span th:text="${cartSize}"></span></p>
         <form th:action="@{/logout}" method="post">
             <button type="submit">Wyloguj</button>
         </form>
+        <div class="shopping-cart-link">
+            <a href="/shoppingcart">
+                <button type="button">Przejdź do koszyka</button>
+            </a>
+        </div>
     </div>
     <h2 th:if="${orderType != null}">Order Type: <span th:text="${orderType}"></span></h2>
     <div th:if="${loggedUser == 'Nie jesteś zalogowany'}">
@@ -20,26 +62,23 @@
     </div>
 </header>
 
-
 <h1>Lista Produktów</h1>
-<table border="1">
-    <thead>
-    <tr>
-        <th>Nazwa</th>
-        <th>Rodzaj</th>
-        <th>Cena</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="meal : ${meals}">
-        <td>
-            <a th:href="@{/meal/{id}(id=${meal.id})}" th:text="${meal.name}"></a>
-        </td>
-        <td th:text="${meal.category}"></td>
-        <td th:text="${meal.price}"></td>
-    </tr>
-    </tbody>
-</table>
+<div>
+    <ul class="meal-list">
+        <li class="meal-item" th:each="meal : ${meals}">
+            <p><strong>Nazwa:</strong> <span th:text="${meal.name}"></span></p>
+            <p><strong>Rodzaj:</strong> <span th:text="${meal.category}"></span></p>
+            <p><strong>Cena:</strong> <span th:text="${meal.price}"></span></p>
+            <button th:onclick="|window.location='@{/meal/{id}(id=${meal.id})}'|" th:if="${loggedUser != 'Nie jesteś zalogowany'}">Zobacz więcej</button>
+            <button type="button" disabled th:if="${loggedUser == 'Nie jesteś zalogowany'}">Zobacz więcej (zaloguj się)</button>
+            <form action="/productlist/add" method="post" th:if="${loggedUser != 'Nie jesteś zalogowany'}">
+                <input type="hidden" name="mealId" th:value="${meal.id}">
+                <button type="submit">Dodaj do koszyka</button>
+            </form>
+            <button type="button" disabled th:if="${loggedUser == 'Nie jesteś zalogowany'}">Dodaj do koszyka (zaloguj się)</button>
+        </li>
+    </ul>
+</div>
 
 </body>
 </html>

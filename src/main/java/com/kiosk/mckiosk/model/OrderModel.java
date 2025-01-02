@@ -27,6 +27,7 @@ public class OrderModel {
     }
 
     public Order updateOrder(int id, Order updatedOrder) {
+        System.out.println("Reciving order in OrderModel with id " + id + " to " + updatedOrder);
         return orderRepository.findById(id)
                 .map(existingOrder -> {
                     existingOrder.setCustomerId(updatedOrder.getCustomerId());

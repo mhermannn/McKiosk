@@ -2,6 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Szczegóły posiłku</title>
+    <style>
+        button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 3px;
+            background-color: #007BFF;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            text-decoration: none;
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="~{fragments :: header}"></div>
@@ -15,6 +35,13 @@
     <li th:each="ingredient : ${meal.ingredients}" th:text="${ingredient.name}"></li>
 </ul>
 
-<a th:href="@{/productlist}">Powrót do listy</a>
+<form action="/productlist/add" method="post">
+    <input type="hidden" name="mealId" th:value="${meal.id}">
+    <button type="submit">Dodaj do koszyka</button>
+</form>
+
+
+
+
 </body>
 </html>

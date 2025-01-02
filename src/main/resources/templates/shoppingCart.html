@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Koszyk</title>
+    <style>
+        .cart-container {
+            width: 80%;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item p {
+            margin: 0;
+        }
+
+        .cart-summary {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .cart-summary strong {
+            font-size: 1.2em;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 3px;
+            background-color: #007BFF;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments :: header}"></div>
+
+<h1>Koszyk</h1>
+<a th:href="@{/productlist}">Wróć do listy produktów</a>
+<div class="cart-container">
+    <div th:if="${shoppingCart.isEmpty()}">
+        <p>Twój koszyk jest pusty. <a th:href="@{/productlist}">Wróć do listy produktów</a></p>
+    </div>
+    <div th:if="${!shoppingCart.isEmpty()}">
+        <div th:each="mealName : ${shoppingCart}" class="cart-item">
+            <p><strong th:text="${mealName}"></strong></p>
+            <form th:action="@{/shoppingcart/remove}" method="post">
+                <input type="hidden" name="mealName" th:value="${mealName}" />
+                <button type="submit">Usuń</button>
+            </form>
+        </div>
+        <div class="cart-summary">
+            <form th:action="@{/shoppingcart/clear}" method="post">
+                <button type="submit">Wyczyść koszyk</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

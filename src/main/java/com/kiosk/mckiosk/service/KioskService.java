@@ -24,14 +24,19 @@ public class KioskService {
     private final OrderModel orderModel;
     private final UserModel userModel;
     private final OrderRepository orderRepository;
+    private final ShoppingCartModel shoppingCartModel;
 
     @Autowired
-    public KioskService(UserRepository userRepository, PasswordEncoder passwordEncoder,UserModel userModel, OrderModel orderModel, OrderRepository orderRepository) {
+    public KioskService(UserRepository userRepository, PasswordEncoder passwordEncoder,UserModel userModel, OrderModel orderModel, ShoppingCartModel shoppingCartModel, OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.orderModel = orderModel;
         this.orderRepository = orderRepository;
         this.userModel = userModel;
+        this.shoppingCartModel = shoppingCartModel;
+    }
+    public ShoppingCartModel getShoppingCartModel() {
+        return shoppingCartModel;
     }
     public UserModel getUserModel() {
         return userModel;
