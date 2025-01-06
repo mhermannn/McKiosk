@@ -2,6 +2,8 @@ package com.kiosk.mckiosk.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigInteger;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -14,11 +16,14 @@ public class User {
 
     private String password;
 
+    private Double resources;
+
     public User() {}
 
-    public User(String login, String password) {
+    public User(String login, String password, double resources) {
         this.login = login;
         this.password = password;
+        this.resources = resources;
     }
 
     public int getId() {
@@ -43,5 +48,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public double getResources() {
+        return resources;
+    }
+
+    public void setResources(Double resources) {
+        this.resources = resources;
     }
 }

@@ -12,7 +12,7 @@ public class HttpService {
         System.out.println("HttpService initialized.");
     }
 
-    public String makeRequest(String url) {
-        return restTemplate.getForObject(url, String.class);
-    }
+//    public String makeRequest(String url) {
+//        return restTemplate.getForObject(url, String.class);
+//    }
 }

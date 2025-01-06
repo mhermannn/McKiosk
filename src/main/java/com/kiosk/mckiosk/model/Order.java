@@ -19,6 +19,9 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
+    @Enumerated(EnumType.STRING)
+    private OrderPaymentType orderPaymentType;
+
     @ElementCollection
     @CollectionTable(name = "order_shopping_cart", joinColumns = @JoinColumn(name = "order_id"))
     @Column(name = "meal_name") // Pole w tabeli `order_shopping_cart` dla każdego wpisu listy
@@ -26,11 +29,14 @@ public class Order {
 
     public Order() {}
 
-    public Order(int customerId, OrderType orderType, OrderStatus orderStatus) {
+    public Order(int customerId, OrderType orderType, OrderStatus orderStatus, OrderPaymentType orderPaymentType) {
         this.customerId = customerId;
         this.orderType = orderType;
         this.orderStatus = orderStatus;
+        this.orderPaymentType = orderPaymentType;
+
     }
+
 
     // Gettery i settery
     public int getOrderId() { return orderId; }
@@ -47,6 +53,10 @@ public class Order {
 
     public void setOrderStatus(OrderStatus orderStatus) { this.orderStatus = orderStatus; }
 
+    public OrderPaymentType getOrderPaymentType() { return orderPaymentType; }
+
+    public void setOrderPaymentType(OrderPaymentType orderPaymentType) { this.orderPaymentType = orderPaymentType; }
+
     public List<String> getShoppingCart() { return shoppingCart; }
 
     public void setShoppingCart(List<String> shoppingCart) { this.shoppingCart = shoppingCart; }
@@ -58,6 +68,7 @@ public class Order {
                 ", customerId=" + customerId +
                 ", orderType=" + orderType +
                 ", orderStatus=" + orderStatus +
+                ", orderPaymentType=" + orderPaymentType +
                 ", shoppingCart=" + shoppingCart +
                 '}';
     }

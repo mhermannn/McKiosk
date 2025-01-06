@@ -1,12 +1,18 @@
 package com.kiosk.mckiosk.model;
 
 import com.kiosk.mckiosk.model.Order;
+import com.kiosk.mckiosk.service.KioskService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ShoppingCartModel {
+
+//    private final KioskService kioskService;
+
+    public ShoppingCartModel() {
+    }
 
     // Dodanie elementu do koszyka
     public void addToCart(Order order, String mealName) {

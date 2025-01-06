@@ -55,4 +55,21 @@ public class MealModel {
         Meal meal = getMealById(mealId).orElseThrow(() -> new NoSuchElementException("Meal not found"));
         return meal.getIngredients().removeIf(ingredient -> ingredient.getId() == ingredientId);
     }
+
+    public double getPriceByName(String name) {
+        return meals.stream()
+                .filter(meal -> meal.getName().equals(name))
+                .findFirst()
+                .map(Meal::getPrice) // Assuming getPrice() returns a String
+                .map(Double::parseDouble) // Convert String to double
+                .orElseThrow(() -> new IllegalArgumentException("Meal not found: " + name));
+    }
+
+//    public double getPriceByName(String mealName) {
+//        return meals.findByName(mealName)
+//                .map(Meal::getPrice)
+//                .orElse(0.0);
+//    }
+
+
 }

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 
@@ -44,17 +45,30 @@ public class ViewController {
         return "mealPage";
     }
 
-    @PostMapping("/ordertype")
-    public String handleOrderTypeSelection(@RequestParam("orderType") String orderType, HttpSession session) {
-        // Pobierz zamówienie z sesji
+    @PostMapping("/changeOrderType")
+    public String handleOrderTypeSelection(HttpSession session, RedirectAttributes redirectAttributes) {
         Order currentOrder = (Order) session.getAttribute("currentOrder");
+
         if (currentOrder != null) {
-            // Ustaw typ zamówienia
-            currentOrder.setOrderType(OrderType.valueOf(orderType.toUpperCase()));
-            kioskService.getOrderModel().updateOrder(currentOrder.getOrderId(), currentOrder);
+            OrderType currentOrderType = currentOrder.getOrderType();
+            if (currentOrderType != null) {
+                if (currentOrderType.equals(OrderType.TO_GO)) {
+                    currentOrder.setOrderType(OrderType.ON_SITE);
+                } else if (currentOrderType.equals(OrderType.ON_SITE)) {
+                    currentOrder.setOrderType(OrderType.TO_GO);
+                }
+                kioskService.getOrderModel().updateOrder(currentOrder.getOrderId(), currentOrder);
+                redirectAttributes.addFlashAttribute("message", "Typ zamówienia zmieniony na: " + currentOrder.getOrderType());
+            } else {
+                redirectAttributes.addFlashAttribute("error", "Typ zamówienia jest nieprawidłowy.");
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Nie znaleziono aktywnego zamówienia.");
         }
+
         return "redirect:/productlist";
     }
+
 
     @GetMapping("/ordertype")
     public String showOrderTypePage(HttpSession session, Authentication authentication) {
@@ -65,12 +79,25 @@ public class ViewController {
                 newOrder.setCustomerId(kioskService.getUserModel().getUserIdByUsername(username));
                 newOrder.setOrderStatus(NEW);
                 newOrder.setOrderType(OrderType.UNKNOWN);
+                newOrder.setOrderPaymentType(OrderPaymentType.UNKNOWN);
                 Order savedOrder = kioskService.getOrderModel().addOrder(newOrder);
                 session.setAttribute("currentOrder", savedOrder);
             }
             return "orderType";
         }
         return "redirect:/login";
+    }
+
+    @PostMapping("/ordertype")
+    public String handleOrderTypeSelection(@RequestParam("orderType") String orderType, HttpSession session) {
+        // Pobierz zamówienie z sesji
+        Order currentOrder = (Order) session.getAttribute("currentOrder");
+        if (currentOrder != null) {
+            // Ustaw typ zamówienia
+            currentOrder.setOrderType(OrderType.valueOf(orderType.toUpperCase()));
+            kioskService.getOrderModel().updateOrder(currentOrder.getOrderId(), currentOrder);
+        }
+        return "redirect:/productlist";
     }
 
     @GetMapping("/productlist")
@@ -148,6 +175,4 @@ public class ViewController {
         });
         return "redirect:/shoppingcart";
     }
-
-
 }

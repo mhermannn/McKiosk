@@ -95,15 +95,4 @@ public class KioskService {
             e.printStackTrace();
         }
     }
-
-    public User handleOAuth2Login(String email) {
-        Optional<User> existingUser = userRepository.findByLogin(email);
-        if (existingUser.isPresent()) {
-            return existingUser.get();
-        } else {
-            User newUser = new User(email, passwordEncoder.encode("defaultPassword"));
-            newUser.setLogin(email); // Ustaw email jako login
-            return userRepository.save(newUser);
-        }
-    }
 }

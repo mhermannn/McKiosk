@@ -6,5 +6,6 @@
     <bean id="admin" class="com.kiosk.mckiosk.model.User">
         <constructor-arg value="admin"/>
         <constructor-arg value="admin"/>
+        <constructor-arg value="60"/>
     </bean>
 </beans>

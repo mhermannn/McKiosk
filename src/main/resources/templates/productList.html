@@ -54,6 +54,14 @@
                 <button type="button">Przejdź do koszyka</button>
             </a>
         </div>
+        <form method="post" action="/changeOrderType">
+            <button type="submit">
+                Zmień rodzaj zamówienia
+<!--                <span th:text="${orderType == 'TO_GO' ? 'ON_SITE' : 'TO_GO'}"></span>-->
+            </button>
+        </form>
+
+
     </div>
     <h2 th:if="${orderType != null}">Order Type: <span th:text="${orderType}"></span></h2>
     <div th:if="${loggedUser == 'Nie jesteś zalogowany'}">

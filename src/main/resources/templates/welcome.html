@@ -7,5 +7,12 @@
 <h1>Welcome to McDonalds!</h1>
 <a th:href="@{/login}">Zaloguj się</a>
 <a th:href="@{/productlist}">Zobacz produkty</a>
+
+<div th:if="${message}">
+    <p class="success" th:text="${message}"></p>
+</div>
+<div th:if="${error}">
+    <p class="error" th:text="${error}"></p>
+</div>
 </body>
 </html>

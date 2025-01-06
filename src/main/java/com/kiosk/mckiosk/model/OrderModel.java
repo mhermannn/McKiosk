@@ -1,6 +1,7 @@
 package com.kiosk.mckiosk.model;
 
 import com.kiosk.mckiosk.repository.OrderRepository;
+import com.kiosk.mckiosk.service.KioskService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class OrderModel {
                     existingOrder.setCustomerId(updatedOrder.getCustomerId());
                     existingOrder.setOrderType(updatedOrder.getOrderType());
                     existingOrder.setOrderStatus(updatedOrder.getOrderStatus());
+                    existingOrder.setOrderPaymentType(updatedOrder.getOrderPaymentType());
                     existingOrder.setShoppingCart(updatedOrder.getShoppingCart());
                     return orderRepository.save(existingOrder);
                 })
@@ -42,4 +44,5 @@ public class OrderModel {
     public void deleteOrder(int id) {
         orderRepository.deleteById(id);
     }
+
 }

@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import com.kiosk.mckiosk.config.CustomAuthenticationFailureHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -46,6 +47,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/ordertype", true)
+                        .failureHandler(new CustomAuthenticationFailureHandler())
                         .permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2
@@ -54,6 +56,8 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/welcome")
+                        .invalidateHttpSession(true) // Inwalidacja sesji
+                        .clearAuthentication(true)
                         .permitAll()
                 )
                 .csrf(csrf -> csrf.disable()); // tymczasowe
