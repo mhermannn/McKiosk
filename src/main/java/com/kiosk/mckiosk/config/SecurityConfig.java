@@ -1,6 +1,10 @@
 package com.kiosk.mckiosk.config;
 
+import com.kiosk.mckiosk.model.Order;
+import com.kiosk.mckiosk.model.OrderStatus;
 import com.kiosk.mckiosk.repository.UserRepository;
+import com.kiosk.mckiosk.service.KioskService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,15 +15,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import com.kiosk.mckiosk.config.CustomAuthenticationFailureHandler;
+import com.kiosk.mckiosk.model.OrderModel;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     private final UserRepository userRepository;
+    private final OrderModel orderModel;
 
-    public SecurityConfig(UserRepository userRepository) {
+    public SecurityConfig(UserRepository userRepository, OrderModel orderModel) {
         this.userRepository = userRepository;
+        this.orderModel = orderModel;
     }
 
     @Bean
@@ -56,11 +63,11 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/welcome")
-                        .invalidateHttpSession(true) // Inwalidacja sesji
+                        .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .permitAll()
                 )
-                .csrf(csrf -> csrf.disable()); // tymczasowe
+                .csrf(csrf -> csrf.disable());
         return http.build();
     }
 }

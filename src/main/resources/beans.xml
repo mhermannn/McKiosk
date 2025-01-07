@@ -3,9 +3,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean id="admin" class="com.kiosk.mckiosk.model.User">
-        <constructor-arg value="admin"/>
-        <constructor-arg value="admin"/>
-        <constructor-arg value="60"/>
-    </bean>
+<!--    <bean id="admin" class="com.kiosk.mckiosk.model.User">-->
+<!--        <constructor-arg value="admin"/>-->
+<!--        <constructor-arg value="admin"/>-->
+<!--        <constructor-arg value="60"/>-->
+<!--    </bean>-->
 </beans>

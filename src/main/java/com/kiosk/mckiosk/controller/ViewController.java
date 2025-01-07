@@ -90,10 +90,8 @@ public class ViewController {
 
     @PostMapping("/ordertype")
     public String handleOrderTypeSelection(@RequestParam("orderType") String orderType, HttpSession session) {
-        // Pobierz zamówienie z sesji
         Order currentOrder = (Order) session.getAttribute("currentOrder");
         if (currentOrder != null) {
-            // Ustaw typ zamówienia
             currentOrder.setOrderType(OrderType.valueOf(orderType.toUpperCase()));
             kioskService.getOrderModel().updateOrder(currentOrder.getOrderId(), currentOrder);
         }
@@ -139,7 +137,7 @@ public class ViewController {
         if (currentOrder != null) {
             model.addAttribute("shoppingCart", currentOrder.getShoppingCart());
         } else {
-            System.out.println("Cant get shopping cart in viewController getmapping");
+//            System.out.println("Cant get shopping cart in viewController getmapping");
             model.addAttribute("shoppingCart", new ArrayList<>());
         }
         return "shoppingCart";

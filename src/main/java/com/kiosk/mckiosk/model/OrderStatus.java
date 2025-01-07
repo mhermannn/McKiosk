@@ -4,6 +4,5 @@ public enum OrderStatus {
     NEW,
     COMPLETED,
     CANCELLED,
-    IN_PROGRESS,
-    CLOSED
+    IN_PROGRESS
 }

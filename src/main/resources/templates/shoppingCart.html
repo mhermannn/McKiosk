@@ -84,14 +84,13 @@
         </div>
     </div>
 
-    <div class="cart-summary">
-            <form th:action="@{/shoppingcart/clear}" method="post" style="display: inline-block;">
-                <button type="submit">Wyczyść koszyk</button>
-            </form>
-            <form th:action="@{/shoppingcart/checkout}" method="post" style="display: inline-block;">
-                <button type="submit">Potwierdź zamówienie</button>
-            </form>
-        </div>
+    <div class="cart-summary" th:if="${!shoppingCart.isEmpty()}">
+        <form th:action="@{/shoppingcart/clear}" method="post" style="display: inline-block;">
+            <button type="submit">Wyczyść koszyk</button>
+        </form>
+        <form th:action="@{/shoppingcart/checkout}" method="post" style="display: inline-block;">
+            <button type="submit">Potwierdź zamówienie</button>
+        </form>
     </div>
 </div>
 </body>
