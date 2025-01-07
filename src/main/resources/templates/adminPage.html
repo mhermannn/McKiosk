@@ -1,2 +1,60 @@
-<!--przycisk na dodawanie środków dla użytkownika-->
-<!--dane dotyczace zamowien-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page - Sales Statistics</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div th:replace="~{fragments :: header}"></div>
+<header>
+    <h1>Sales Statistics</h1>
+</header>
+<main>
+    <section>
+        <h2>Daily Sales</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Total Orders</th>
+                <th>Total Revenue</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Statystyki sprzedaży dziennej -->
+            <tr th:each="dailyStat : ${dailyStats}">
+                <td th:text="${dailyStat.date}"></td>
+                <td th:text="${dailyStat.totalOrders}"></td>
+                <td th:text="${dailyStat.totalRevenue} + ' PLN'"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <section>
+        <h2>Monthly Sales</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Month</th>
+                <th>Total Orders</th>
+                <th>Total Revenue</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Statystyki sprzedaży miesięcznej -->
+            <tr th:each="monthlyStat : ${monthlyStats}">
+                <td th:text="${monthlyStat.month}"></td>
+                <td th:text="${monthlyStat.totalOrders}"></td>
+                <td th:text="${monthlyStat.totalRevenue} + ' PLN'"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2025 McKiosk. All rights reserved.</p>
+</footer>
+</body>
+</html>

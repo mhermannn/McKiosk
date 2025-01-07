@@ -137,7 +137,7 @@ public class ShoppingCartController {
 //                    System.out.println("New Saved order AFTER CANCELLED with copied cart: " + savedOrder);
                     session.setAttribute("currentOrder", savedOrder);
 
-                    model.addAttribute("error", "Za mało środków. Nowe zamówienie zostało utworzone i zawiera pozycje z poprzedniego koszyka.");
+                    model.addAttribute("error", "Za mało środków. Utworzono nowe zamówienie zawierające pozycje z poprzedniego koszyka.");
                     return "insufficientFunds";
                 }
             } else {

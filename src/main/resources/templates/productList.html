@@ -2,42 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <title>Lista Produktów</title>
-    <style>
-        .meal-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 0;
-            list-style: none;
-        }
-
-        .meal-item {
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            width: 200px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .meal-item button {
-            margin-top: 10px;
-            padding: 5px 10px;
-            cursor: pointer;
-            border: none;
-            border-radius: 3px;
-            background-color: #007BFF;
-            color: white;
-        }
-
-        .meal-item button:hover {
-            background-color: #0056b3;
-        }
-
-        .meal-item p {
-            margin: 5px 0;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 <div th:replace="~{fragments :: header}"></div>
