@@ -4,6 +4,7 @@ import com.kiosk.mckiosk.model.*;
 import com.kiosk.mckiosk.service.KioskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import static com.kiosk.mckiosk.model.OrderStatus.NEW;
 
@@ -57,6 +59,7 @@ public class ViewController {
                 } else if (currentOrderType.equals(OrderType.ON_SITE)) {
                     currentOrder.setOrderType(OrderType.TO_GO);
                 }
+                currentOrder.setOrderStatus(OrderStatus.IN_PROGRESS);
                 kioskService.getOrderModel().updateOrder(currentOrder.getOrderId(), currentOrder);
                 redirectAttributes.addFlashAttribute("message", "Typ zamówienia zmieniony na: " + currentOrder.getOrderType());
             } else {
@@ -108,6 +111,10 @@ public class ViewController {
             if (principal instanceof org.springframework.security.core.userdetails.User) {
                 String username = authentication.getName();
                 model.addAttribute("loggedUser", username);
+//                Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+//                for (GrantedAuthority authority : authorities) {
+//                    System.out.println("User has authority: " + authority.getAuthority());
+//                }
             } else if (principal instanceof org.springframework.security.oauth2.core.user.DefaultOAuth2User) {
                 String email = ((org.springframework.security.oauth2.core.user.DefaultOAuth2User) principal).getAttribute("email");
                 model.addAttribute("loggedUser", email != null ? email : "Użytkownik Google");
@@ -145,6 +152,7 @@ public class ViewController {
 
     @PostMapping("/productlist/add")
     public String addProductToCart(@RequestParam("mealId") int mealId, HttpSession session) {
+
         Order currentOrder = (Order) session.getAttribute("currentOrder");
         System.out.println(kioskService.getMealModel().getMealById(mealId));
         kioskService.getMealModel().getMealById(mealId).ifPresent(meal -> {
@@ -173,4 +181,36 @@ public class ViewController {
         });
         return "redirect:/shoppingcart";
     }
+
+//    @GetMapping("/adminPage")
+//    public String showAdminPage(Model model, HttpSession session) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//        if (authentication != null && authentication.isAuthenticated()) {
+//            String username = authentication.getName();
+//            model.addAttribute("loggedUser", username);
+//        } else {
+//            model.addAttribute("loggedUser", "Nie jesteś zalogowany");
+//        }
+//
+//        model.addAttribute("orderStats", kioskService.getOrderStatistics());
+//        return "adminPage";
+//    }
+
+    @GetMapping("/adminPage")
+    public String showAdminPage(Model model, HttpSession session) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            model.addAttribute("loggedUser", username);
+        } else {
+            model.addAttribute("loggedUser", "Nie jesteś zalogowany");
+        }
+
+        model.addAttribute("orderStats", kioskService.getOrderStatistics());
+        return "adminPage";
+    }
+
+
 }

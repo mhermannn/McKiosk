@@ -34,10 +34,11 @@ public class SecurityConfig {
         return username -> userRepository.findByLogin(username)
                 .map(user -> org.springframework.security.core.userdetails.User.withUsername(user.getLogin())
                         .password(user.getPassword())
-                        .authorities("ROLE_USER")
+                        .authorities("ROLE_" + user.getRole().toUpperCase())
                         .build())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -49,6 +50,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login", "/oauth2/**", "/productlist", "/images/**", "/css/**").permitAll()
+                        .requestMatchers("/adminPage").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

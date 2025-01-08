@@ -2,7 +2,9 @@ package com.kiosk.mckiosk.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 
 @Entity
 @Table(name = "users")
@@ -17,6 +19,9 @@ public class User {
     private String password;
 
     private Double resources;
+
+    @Column(nullable = false, length = 20)
+    private String role;
 
     public User() {}
 
@@ -55,6 +60,14 @@ public class User {
     }
 
     public void setResources(Double resources) {
-        this.resources = resources;
+        this.resources = BigDecimal.valueOf(resources).setScale(2, RoundingMode.HALF_UP).doubleValue();
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

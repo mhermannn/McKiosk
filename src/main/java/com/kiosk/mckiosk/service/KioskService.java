@@ -10,9 +10,10 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class KioskService {
@@ -95,4 +96,43 @@ public class KioskService {
             e.printStackTrace();
         }
     }
+
+    public Map<String, Map<String, Map<String, Long>>> getOrderStatistics() {
+        List<Order> orders = orderModel.getAllOrders();
+        LocalDateTime startOfToday = LocalDateTime.now().toLocalDate().atStartOfDay();
+        LocalDateTime startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay();
+
+        List<Order> todaysOrders = orders.stream()
+                .filter(order -> order.getCreatedAt().isAfter(startOfToday))
+                .toList();
+
+        List<Order> monthlyOrders = orders.stream()
+                .filter(order -> order.getCreatedAt().isAfter(startOfMonth))
+                .toList();
+
+        return Map.of(
+                "today", computeStats(todaysOrders),
+                "month", computeStats(monthlyOrders)
+        );
+    }
+
+    private Map<String, Map<String, Long>> computeStats(List<Order> orders) {
+        Map<String, Long> paymentTypes = orders.stream()
+                .collect(Collectors.groupingBy(order -> order.getOrderPaymentType().name(), Collectors.counting()));
+
+        Map<String, Long> statuses = orders.stream()
+                .collect(Collectors.groupingBy(order -> order.getOrderStatus().name(), Collectors.counting()));
+
+        Map<String, Long> orderTypes = orders.stream()
+                .collect(Collectors.groupingBy(order -> order.getOrderType().name(), Collectors.counting()));
+
+        Map<String, Map<String, Long>> stats = new HashMap<>();
+        stats.put("paymentTypes", paymentTypes);
+        stats.put("statuses", statuses);
+        stats.put("orderTypes", orderTypes);
+
+        return stats;
+    }
+
+
 }

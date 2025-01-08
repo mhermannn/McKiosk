@@ -1,60 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Page - Sales Statistics</title>
+    <title>Panel Administratora</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 <div th:replace="~{fragments :: header}"></div>
-<header>
-    <h1>Sales Statistics</h1>
-</header>
-<main>
-    <section>
-        <h2>Daily Sales</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Date</th>
-                <th>Total Orders</th>
-                <th>Total Revenue</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- Statystyki sprzedaży dziennej -->
-            <tr th:each="dailyStat : ${dailyStats}">
-                <td th:text="${dailyStat.date}"></td>
-                <td th:text="${dailyStat.totalOrders}"></td>
-                <td th:text="${dailyStat.totalRevenue} + ' PLN'"></td>
-            </tr>
-            </tbody>
-        </table>
-    </section>
-    <section>
-        <h2>Monthly Sales</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Month</th>
-                <th>Total Orders</th>
-                <th>Total Revenue</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- Statystyki sprzedaży miesięcznej -->
-            <tr th:each="monthlyStat : ${monthlyStats}">
-                <td th:text="${monthlyStat.month}"></td>
-                <td th:text="${monthlyStat.totalOrders}"></td>
-                <td th:text="${monthlyStat.totalRevenue} + ' PLN'"></td>
-            </tr>
-            </tbody>
-        </table>
-    </section>
-</main>
-<footer>
-    <p>&copy; 2025 McKiosk. All rights reserved.</p>
-</footer>
+<h1>Panel Administratora</h1>
+
+<h2>Statystyki zamówień</h2>
+
+<h3>Dzisiaj</h3>
+<div>
+    <h4>Rodzaje płatności</h4>
+    <ul>
+        <li>KARTA: <span th:text="${orderStats['today']['paymentTypes']['CARD']}">0</span></li>
+        <li>GOTÓWKA: <span th:text="${orderStats['today']['paymentTypes']['CASH']}">0</span></li>
+        <li>PRZELEW: <span th:text="${orderStats['today']['paymentTypes']['TRANSFER']}">0</span></li>
+        <li>NIEZNANE: <span th:text="${orderStats['today']['paymentTypes']['UNKNOWN']}">0</span></li>
+    </ul>
+
+    <h4>Statusy zamówień</h4>
+    <ul>
+        <li>ANULOWANE: <span th:text="${orderStats['today']['statuses']['CANCELLED']}">0</span></li>
+        <li>ZAKOŃCZONE: <span th:text="${orderStats['today']['statuses']['COMPLETED']}">0</span></li>
+        <li>W TRAKCIE: <span th:text="${orderStats['today']['statuses']['IN_PROGRESS']}">0</span></li>
+        <li>NOWE: <span th:text="${orderStats['today']['statuses']['NEW']}">0</span></li>
+    </ul>
+
+    <h4>Typy zamówień</h4>
+    <ul>
+        <li>NA MIEJSCU: <span th:text="${orderStats['today']['orderTypes']['ON_SITE']}">0</span></li>
+        <li>NA WYNOS: <span th:text="${orderStats['today']['orderTypes']['TO_GO']}">0</span></li>
+    </ul>
+</div>
+
+<h3>W tym miesiącu</h3>
+<div>
+    <h4>Rodzaje płatności</h4>
+    <ul>
+        <li>KARTA: <span th:text="${orderStats['month']['paymentTypes']['CARD']}">0</span></li>
+        <li>GOTÓWKA: <span th:text="${orderStats['month']['paymentTypes']['CASH']}">0</span></li>
+        <li>PRZELEW: <span th:text="${orderStats['month']['paymentTypes']['TRANSFER']}">0</span></li>
+        <li>NIEZNANE: <span th:text="${orderStats['month']['paymentTypes']['UNKNOWN']}">0</span></li>
+    </ul>
+
+    <h4>Statusy zamówień</h4>
+    <ul>
+        <li>ANULOWANE: <span th:text="${orderStats['month']['statuses']['CANCELLED']}">0</span></li>
+        <li>ZAKOŃCZONE: <span th:text="${orderStats['month']['statuses']['COMPLETED']}">0</span></li>
+        <li>W TRAKCIE: <span th:text="${orderStats['month']['statuses']['IN_PROGRESS']}">0</span></li>
+        <li>NOWE: <span th:text="${orderStats['month']['statuses']['NEW']}">0</span></li>
+    </ul>
+
+    <h4>Typy zamówień</h4>
+    <ul>
+        <li>NA MIEJSCU: <span th:text="${orderStats['month']['orderTypes']['ON_SITE']}">0</span></li>
+        <li>NA WYNOS: <span th:text="${orderStats['month']['orderTypes']['TO_GO']}">0</span></li>
+    </ul>
+</div>
+
+<a th:href="@{/productlist}">Wróć do listy produktów</a>
 </body>
 </html>

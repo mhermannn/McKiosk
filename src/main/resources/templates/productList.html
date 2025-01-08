@@ -6,10 +6,13 @@
 </head>
 <body>
 <div th:replace="~{fragments :: header}"></div>
-
 <header>
     <div th:if="${loggedUser != 'Nie jesteś zalogowany'}">
         <p>Jesteś zalogowany jako: <span th:text="${loggedUser}"></span></p>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <a th:href="@{/adminPage}">Strona Admina</a>
+        </div>
+
         <p>Koszyk: <span th:text="${cartSize}"></span></p>
         <form th:action="@{/logout}" method="post">
             <button type="submit">Wyloguj</button>

@@ -1,6 +1,8 @@
 package com.kiosk.mckiosk.model;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,9 @@ public class Order {
     @Column(name = "meal_name") // Pole w tabeli `order_shopping_cart` dla każdego wpisu listy
     private List<String> shoppingCart = new ArrayList<>();
 
+    @Column(name = "created_at", updatable = false, insertable = false)
+    private LocalDateTime createdAt;
+
     public Order() {}
 
     public Order(int customerId, OrderType orderType, OrderStatus orderStatus, OrderPaymentType orderPaymentType) {
@@ -34,7 +39,6 @@ public class Order {
         this.orderType = orderType;
         this.orderStatus = orderStatus;
         this.orderPaymentType = orderPaymentType;
-
     }
 
 
@@ -60,6 +64,14 @@ public class Order {
     public List<String> getShoppingCart() { return shoppingCart; }
 
     public void setShoppingCart(List<String> shoppingCart) { this.shoppingCart = shoppingCart; }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 
     @Override
     public String toString() {
