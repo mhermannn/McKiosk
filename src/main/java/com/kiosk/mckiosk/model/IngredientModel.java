@@ -27,7 +27,7 @@ public class IngredientModel {
     }
 
     public List<Ingredient> getAllIngredients() {
-        return new ArrayList<>(ingredients); // Return a copy to prevent modification
+        return new ArrayList<>(ingredients);
     }
 
     public Ingredient updateIngredient(int id, Ingredient updatedIngredient) {

@@ -111,10 +111,6 @@ public class ViewController {
             if (principal instanceof org.springframework.security.core.userdetails.User) {
                 String username = authentication.getName();
                 model.addAttribute("loggedUser", username);
-//                Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-//                for (GrantedAuthority authority : authorities) {
-//                    System.out.println("User has authority: " + authority.getAuthority());
-//                }
             } else if (principal instanceof org.springframework.security.oauth2.core.user.DefaultOAuth2User) {
                 String email = ((org.springframework.security.oauth2.core.user.DefaultOAuth2User) principal).getAttribute("email");
                 model.addAttribute("loggedUser", email != null ? email : "Użytkownik Google");
@@ -144,7 +140,6 @@ public class ViewController {
         if (currentOrder != null) {
             model.addAttribute("shoppingCart", currentOrder.getShoppingCart());
         } else {
-//            System.out.println("Cant get shopping cart in viewController getmapping");
             model.addAttribute("shoppingCart", new ArrayList<>());
         }
         return "shoppingCart";
@@ -182,21 +177,6 @@ public class ViewController {
         return "redirect:/shoppingcart";
     }
 
-//    @GetMapping("/adminPage")
-//    public String showAdminPage(Model model, HttpSession session) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//
-//        if (authentication != null && authentication.isAuthenticated()) {
-//            String username = authentication.getName();
-//            model.addAttribute("loggedUser", username);
-//        } else {
-//            model.addAttribute("loggedUser", "Nie jesteś zalogowany");
-//        }
-//
-//        model.addAttribute("orderStats", kioskService.getOrderStatistics());
-//        return "adminPage";
-//    }
-
     @GetMapping("/adminPage")
     public String showAdminPage(Model model, HttpSession session) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -211,6 +191,34 @@ public class ViewController {
         model.addAttribute("orderStats", kioskService.getOrderStatistics());
         return "adminPage";
     }
-
+    @GetMapping("/meal/{id}/editMeal")
+    public String showEditMeal(@PathVariable int id, Model model, HttpSession session) {
+        kioskService.getMealModel().getMealById(id).ifPresentOrElse(
+                meal -> model.addAttribute("meal", meal),
+                () -> model.addAttribute("error", "Meal not found")
+        );
+        model.addAttribute("mealCategories", kioskService.getMealModel().getMealCategories());
+        return "editMeal";
+    }
+    @PostMapping("/meal/{id}/editMeal")
+    public String saveEditMeal(@PathVariable int id, @RequestParam String name,
+                               @RequestParam String category, @RequestParam double price,
+                               Model model) {
+        try {
+            Meal updatedMeal = new Meal();
+            updatedMeal.setId(id);
+            updatedMeal.setName(name);
+            updatedMeal.setCategory(MealCategories.valueOf(category));
+            updatedMeal.setPrice(String.valueOf(price));
+            updatedMeal.setIngredients(kioskService.getMealModel().getMealById(id).get().getIngredients());
+            System.out.println(updatedMeal);
+            kioskService.getMealModel().updateMeal(id, updatedMeal);
+            kioskService.saveMealsToCSV();
+            return "redirect:/productlist";
+        } catch (Exception e) {
+            model.addAttribute("error", "Błąd podczas aktualizacji posiłku: " + e.getMessage());
+            return "editMeal";
+        }
+    }
 
 }

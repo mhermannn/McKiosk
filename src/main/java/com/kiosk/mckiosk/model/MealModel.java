@@ -17,6 +17,10 @@ public class MealModel {
         return meals;
     }
 
+    public List<MealCategories> getMealCategories() {
+        return List.of(MealCategories.values());
+    }
+
     public Meal addMeal(Meal meal) {
         meals.add(meal);
         return meal;
@@ -60,16 +64,9 @@ public class MealModel {
         return meals.stream()
                 .filter(meal -> meal.getName().equals(name))
                 .findFirst()
-                .map(Meal::getPrice) // Assuming getPrice() returns a String
-                .map(Double::parseDouble) // Convert String to double
+                .map(Meal::getPrice)
+                .map(Double::parseDouble)
                 .orElseThrow(() -> new IllegalArgumentException("Meal not found: " + name));
     }
-
-//    public double getPriceByName(String mealName) {
-//        return meals.findByName(mealName)
-//                .map(Meal::getPrice)
-//                .orElse(0.0);
-//    }
-
 
 }

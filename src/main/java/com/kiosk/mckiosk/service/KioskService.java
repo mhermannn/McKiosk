@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -134,5 +132,22 @@ public class KioskService {
         return stats;
     }
 
-
+    public void saveMealsToCSV() {
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("src/main/resources/MEALS.csv")))) {
+            writer.println("id,name,category,price,ingredients");
+            for (Meal meal : mealModel.getAllMeals()) {
+                String ingredients = meal.getIngredients().stream()
+                        .map(Ingredient::getName)
+                        .collect(Collectors.joining(","));
+                writer.printf("%d,%s,%s,%s,\"%s\"%n",
+                        meal.getId(),
+                        meal.getName(),
+                        meal.getCategory(),
+                        meal.getPrice(),
+                        ingredients);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

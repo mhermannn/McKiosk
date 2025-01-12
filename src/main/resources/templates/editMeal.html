@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Edit Meal</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div th:replace="~{fragments :: header}"></div>
+<h1>Edit Meal</h1>
+<form th:action="@{/meal/{id}/editMeal(id=${meal.id})}" th:method="post">
+  <label for="name">Meal Name:</label>
+  <input type="text" id="name" name="name" th:value="${meal.name}" required><br><br>
+
+  <label for="category">Category:</label>
+  <select id="category" name="category" required>
+    <option value="" disabled selected>Wybierz kategorię</option>
+    <option th:each="category : ${mealCategories}" th:value="${category}" th:text="${category}"
+            th:selected="${category == meal.category}">
+    </option>
+  </select><br><br>
+
+  <label for="price">Price:</label>
+  <input type="number" id="price" name="price" th:value="${meal.price}" step="0.01" min="0" required><br><br>
+
+  <button type="submit">Save Changes</button>
+</form>
+</body>
+</html>

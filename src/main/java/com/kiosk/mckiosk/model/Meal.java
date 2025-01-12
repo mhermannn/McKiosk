@@ -15,6 +15,7 @@ public class Meal {
         this.price = price;
         this.ingredients = ingredients;
     }
+    public Meal(){}
     @Override
     public String toString() {
         return id+ ". " +name + ", " + category + ", " + price;

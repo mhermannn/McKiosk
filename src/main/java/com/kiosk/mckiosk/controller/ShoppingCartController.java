@@ -66,7 +66,6 @@ public class ShoppingCartController {
                     .sum();
             model.addAttribute("totalPrice", totalPrice);
             session.setAttribute("totalPrice", totalPrice);
-//            System.out.println("Total price in set /checkout saved in session: " + session.getAttribute("totalPrice"));
         }
         return "checkoutCart";
     }
@@ -79,10 +78,7 @@ public class ShoppingCartController {
     @PostMapping("/checkout/confirm")
     public String confirmPayment(@RequestParam("paymentMethod") String paymentMethod, HttpSession session, Model model) {
         Order currentOrder = (Order) session.getAttribute("currentOrder");
-//        System.out.println("Current order in /checkout/confirm saved in session: " + currentOrder);
         Double totalPrice = (Double) session.getAttribute("totalPrice");
-//        System.out.println("Total price in set /checkout saved in session now checking in totalPrice: " + totalPrice);
-
         if (totalPrice == null) {
             model.addAttribute("error", "Nie można znaleźć ceny całkowitej.");
             return "shoppingCart";
@@ -98,11 +94,7 @@ public class ShoppingCartController {
                     .orElse(null);
 
             if (currentUser != null) {
-//                System.out.println("Current user is not null");
-//                System.out.println("Current user get resources: " + currentUser.getResources());
-//                System.out.println("Current user totalPrice inside of if: " + totalPrice);
                 if (currentUser.getResources() >= totalPrice) {
-//                    System.out.println("Current user resources >= totalPrice");
                     currentUser.setResources(currentUser.getResources() - totalPrice);
                     kioskService.getUserModel().updateUser(currentUser.getId(), currentUser);
 
@@ -115,13 +107,11 @@ public class ShoppingCartController {
                     newOrder.setOrderType(currentOrder.getOrderType());
                     newOrder.setOrderPaymentType(OrderPaymentType.UNKNOWN);
                     Order savedOrder = kioskService.getOrderModel().addOrder(newOrder);
-//                    System.out.println("Saved order: " + savedOrder);
                     session.setAttribute("currentOrder", savedOrder);
 
                     model.addAttribute("message", "Zamówienie nr " + currentOrder.getOrderId() + " prawidłowo opłacone.");
                     return "welcome";
                 } else {
-//                    System.out.println("Current user resources < totalPrice");
                     currentOrder.setOrderStatus(OrderStatus.CANCELLED);
                     kioskService.getOrderModel().updateOrder(currentOrder.getOrderId(), currentOrder);
 
@@ -134,14 +124,12 @@ public class ShoppingCartController {
                     newOrder.setShoppingCart(new ArrayList<>(currentOrder.getShoppingCart()));
 
                     Order savedOrder = kioskService.getOrderModel().addOrder(newOrder);
-//                    System.out.println("New Saved order AFTER CANCELLED with copied cart: " + savedOrder);
                     session.setAttribute("currentOrder", savedOrder);
 
                     model.addAttribute("error", "Za mało środków. Utworzono nowe zamówienie zawierające pozycje z poprzedniego koszyka.");
                     return "insufficientFunds";
                 }
             } else {
-//                System.out.println("Current user is null");
                 model.addAttribute("error", "Nie znaleziono użytkownika.");
                 return "redirect:/";
             }

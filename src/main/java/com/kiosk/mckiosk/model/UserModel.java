@@ -55,19 +55,5 @@ public class UserModel {
         }
         return false;
     }
-
-    public boolean subtractUserResources(double amount, int id) {
-        if (userRepository.existsById(id)) {
-            Optional<User> user = userRepository.findById(id);
-            if (user.isPresent() && user.get().getResources() >= amount) {
-                user.get().setResources(user.get().getResources() - amount);
-                userRepository.save(user.get());
-                return true;
-            }
-            return false;
-            }
-        return false;
-        }
-
-    }
+}
 

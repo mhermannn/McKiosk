@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Szczegóły posiłku</title>
     <link rel="stylesheet" href="/css/styles.css">
@@ -20,9 +20,8 @@
     <input type="hidden" name="mealId" th:value="${meal.id}">
     <button type="submit">Dodaj do koszyka</button>
 </form>
-
-
-
-
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <a th:href="@{/meal/{id}/editMeal(id=${meal.id})}">Edytuj posiłek</a>
+</div>
 </body>
 </html>

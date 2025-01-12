@@ -26,7 +26,7 @@ public class Order {
 
     @ElementCollection
     @CollectionTable(name = "order_shopping_cart", joinColumns = @JoinColumn(name = "order_id"))
-    @Column(name = "meal_name") // Pole w tabeli `order_shopping_cart` dla każdego wpisu listy
+    @Column(name = "meal_name")
     private List<String> shoppingCart = new ArrayList<>();
 
     @Column(name = "created_at", updatable = false, insertable = false)
@@ -41,8 +41,6 @@ public class Order {
         this.orderPaymentType = orderPaymentType;
     }
 
-
-    // Gettery i settery
     public int getOrderId() { return orderId; }
 
     public int getCustomerId() { return customerId; }

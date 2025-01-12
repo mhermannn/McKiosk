@@ -3,7 +3,6 @@ package com.kiosk.mckiosk.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
 
 @Entity
