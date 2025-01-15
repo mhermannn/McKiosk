@@ -1,10 +1,14 @@
 package com.kiosk.mckiosk.controller;
 
-import com.kiosk.mckiosk.model.*;
+import com.kiosk.mckiosk.model.entity.Meal;
+import com.kiosk.mckiosk.model.entity.Order;
+import com.kiosk.mckiosk.model.enums.MealCategories;
+import com.kiosk.mckiosk.model.enums.OrderPaymentType;
+import com.kiosk.mckiosk.model.enums.OrderStatus;
+import com.kiosk.mckiosk.model.enums.OrderType;
 import com.kiosk.mckiosk.service.KioskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +18,8 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
-import static com.kiosk.mckiosk.model.OrderStatus.NEW;
+import static com.kiosk.mckiosk.model.enums.OrderStatus.NEW;
 
 @Controller
 public class ViewController {

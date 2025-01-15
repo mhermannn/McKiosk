@@ -1,6 +1,6 @@
 package com.kiosk.mckiosk.repository;
 
-import com.kiosk.mckiosk.model.User;
+import com.kiosk.mckiosk.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

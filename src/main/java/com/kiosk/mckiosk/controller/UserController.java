@@ -1,6 +1,6 @@
 package com.kiosk.mckiosk.controller;
 
-import com.kiosk.mckiosk.model.User;
+import com.kiosk.mckiosk.model.entity.User;
 import com.kiosk.mckiosk.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

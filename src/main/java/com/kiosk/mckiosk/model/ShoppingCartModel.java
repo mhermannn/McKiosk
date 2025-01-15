@@ -1,5 +1,6 @@
 package com.kiosk.mckiosk.model;
 
+import com.kiosk.mckiosk.model.entity.Order;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

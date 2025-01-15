@@ -1,4 +1,4 @@
-package com.kiosk.mckiosk.model;
+package com.kiosk.mckiosk.model.entity;
 
 public class ShoppingCartItem {
     private String mealName;

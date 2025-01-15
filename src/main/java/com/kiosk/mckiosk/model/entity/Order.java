@@ -1,5 +1,8 @@
-package com.kiosk.mckiosk.model;
+package com.kiosk.mckiosk.model.entity;
 
+import com.kiosk.mckiosk.model.enums.OrderPaymentType;
+import com.kiosk.mckiosk.model.enums.OrderStatus;
+import com.kiosk.mckiosk.model.enums.OrderType;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;

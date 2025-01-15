@@ -1,6 +1,10 @@
 package com.kiosk.mckiosk.controller;
 
 import com.kiosk.mckiosk.model.*;
+import com.kiosk.mckiosk.model.entity.Order;
+import com.kiosk.mckiosk.model.entity.User;
+import com.kiosk.mckiosk.model.enums.OrderPaymentType;
+import com.kiosk.mckiosk.model.enums.OrderStatus;
 import com.kiosk.mckiosk.service.KioskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +15,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.util.ArrayList;
 
-import static com.kiosk.mckiosk.model.OrderStatus.NEW;
+import static com.kiosk.mckiosk.model.enums.OrderStatus.NEW;
 
 @Controller
 @RequestMapping("/shoppingcart")

@@ -1,5 +1,6 @@
 package com.kiosk.mckiosk.model;
 
+import com.kiosk.mckiosk.model.entity.User;
 import com.kiosk.mckiosk.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -56,4 +57,3 @@ public class UserModel {
         return false;
     }
 }
-

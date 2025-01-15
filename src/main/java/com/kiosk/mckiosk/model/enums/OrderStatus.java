@@ -1,4 +1,4 @@
-package com.kiosk.mckiosk.model;
+package com.kiosk.mckiosk.model.enums;
 
 public enum OrderStatus {
     NEW,

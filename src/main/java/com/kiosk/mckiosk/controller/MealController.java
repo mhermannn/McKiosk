@@ -1,6 +1,6 @@
 package com.kiosk.mckiosk.controller;
 
-import com.kiosk.mckiosk.model.Meal;
+import com.kiosk.mckiosk.model.entity.Meal;
 import com.kiosk.mckiosk.service.KioskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

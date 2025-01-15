@@ -1,4 +1,6 @@
-package com.kiosk.mckiosk.model;
+package com.kiosk.mckiosk.model.entity;
+
+import com.kiosk.mckiosk.model.enums.MealCategories;
 
 import java.util.*;
 

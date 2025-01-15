@@ -1,5 +1,7 @@
 package com.kiosk.mckiosk.model;
 
+import com.kiosk.mckiosk.model.entity.Ingredient;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;

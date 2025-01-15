@@ -1,6 +1,6 @@
 id,name,category,price,ingredients
 1,McFlurry Kitkat,DESSERTS_ICECREAM,3.99,"kitkat,chocolate syrup,ice cream"
-2,CocaCola Zero 0.3L,COLD_DRINKS,2.49,"cola zero"
+2,CocaCola Zero 0.5L,COLD_DRINKS,3.49,"cola zero"
 3,chocoberry,HOT_DRINKS,2.29,"chocolate,strawberry syrup,milk"
 4,McChicker,BURGERS,5.99,"chicken patty,lettuce,tomato,onion,pickles,cheese,mayo"
 5,McWrap,WRAPS_SALADS,6.49,"chicken strips,tomato,cucumber,lettuce,cheese,ranch sauce"

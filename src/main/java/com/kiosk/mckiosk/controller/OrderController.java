@@ -1,7 +1,6 @@
 package com.kiosk.mckiosk.controller;
 
-import com.kiosk.mckiosk.model.Ingredient;
-import com.kiosk.mckiosk.model.Order;
+import com.kiosk.mckiosk.model.entity.Order;
 import com.kiosk.mckiosk.service.KioskService;
 import org.springframework.web.bind.annotation.*;
 

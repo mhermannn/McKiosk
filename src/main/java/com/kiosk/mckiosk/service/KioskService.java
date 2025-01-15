@@ -1,10 +1,12 @@
 package com.kiosk.mckiosk.service;
 
 import com.kiosk.mckiosk.model.*;
+import com.kiosk.mckiosk.model.entity.Ingredient;
+import com.kiosk.mckiosk.model.entity.Meal;
+import com.kiosk.mckiosk.model.entity.Order;
+import com.kiosk.mckiosk.model.enums.MealCategories;
 import com.kiosk.mckiosk.repository.OrderRepository;
-import com.kiosk.mckiosk.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -15,22 +17,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class KioskService {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-
     private final IngredientModel ingredientModel = new IngredientModel();
     private final MealModel mealModel = new MealModel(ingredientModel);
     private final OrderModel orderModel;
     private final UserModel userModel;
-    private final OrderRepository orderRepository;
     private final ShoppingCartModel shoppingCartModel;
 
     @Autowired
-    public KioskService(UserRepository userRepository, PasswordEncoder passwordEncoder,UserModel userModel, OrderModel orderModel, ShoppingCartModel shoppingCartModel, OrderRepository orderRepository) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+    public KioskService(UserModel userModel, OrderModel orderModel, ShoppingCartModel shoppingCartModel) {
         this.orderModel = orderModel;
-        this.orderRepository = orderRepository;
         this.userModel = userModel;
         this.shoppingCartModel = shoppingCartModel;
     }
