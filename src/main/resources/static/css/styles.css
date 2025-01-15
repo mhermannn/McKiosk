@@ -51,7 +51,6 @@ img {
     height: auto;
 }
 
-/* Stopka */
 footer {
     background-color: #333;
     color: #fff;
@@ -61,7 +60,6 @@ footer {
     width: 100%;
 }
 
-/* Koszyk */
 .cart-container {
     width: 80%;
     margin: 20px auto;
@@ -96,7 +94,6 @@ footer {
     font-size: 1.2em;
 }
 
-/* Przyciski */
 button {
     padding: 5px 10px;
     cursor: pointer;
@@ -104,6 +101,7 @@ button {
     border-radius: 3px;
     background-color: #d81e06;
     color: white;
+    margin-bottom: 3px;
 }
 
 button:hover {
@@ -113,6 +111,25 @@ button:hover {
 button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 1em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+select:focus {
+    border-color: #ffcc00;
+    box-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+    outline: none;
 }
 
 .meal-list {
@@ -132,7 +149,6 @@ button:disabled {
     text-align: center;
 }
 
-/* Formularze */
 .form-group label {
     display: block;
     margin-bottom: 5px;

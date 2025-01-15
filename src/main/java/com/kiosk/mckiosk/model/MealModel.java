@@ -3,6 +3,7 @@ package com.kiosk.mckiosk.model;
 import com.kiosk.mckiosk.model.entity.Ingredient;
 import com.kiosk.mckiosk.model.entity.Meal;
 import com.kiosk.mckiosk.model.enums.MealCategories;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class MealModel {
         return meal;
     }
 
-    public Meal updateMeal(int id, Meal updatedMeal) {
+    public Meal updateMeal(int id, @Valid Meal updatedMeal) {
         Meal existingMeal = getMealById(id).orElseThrow(() -> new NoSuchElementException("Meal not found with ID: " + id));
         existingMeal.setName(updatedMeal.getName());
         existingMeal.setPrice(updatedMeal.getPrice());
