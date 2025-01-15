@@ -5,7 +5,6 @@ import com.kiosk.mckiosk.model.entity.Ingredient;
 import com.kiosk.mckiosk.model.entity.Meal;
 import com.kiosk.mckiosk.model.entity.Order;
 import com.kiosk.mckiosk.model.enums.MealCategories;
-import com.kiosk.mckiosk.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,26 +18,18 @@ import java.util.stream.Collectors;
 public class KioskService {
     private final IngredientModel ingredientModel = new IngredientModel();
     private final MealModel mealModel = new MealModel(ingredientModel);
-    private final OrderModel orderModel;
     private final UserModel userModel;
-    private final ShoppingCartModel shoppingCartModel;
-
+    private final OrderService orderService;
     @Autowired
-    public KioskService(UserModel userModel, OrderModel orderModel, ShoppingCartModel shoppingCartModel) {
-        this.orderModel = orderModel;
+    public KioskService(UserModel userModel, OrderService orderService) {
         this.userModel = userModel;
-        this.shoppingCartModel = shoppingCartModel;
+        this.orderService = orderService;
     }
-    public ShoppingCartModel getShoppingCartModel() {
-        return shoppingCartModel;
-    }
+
     public UserModel getUserModel() {
         return userModel;
     }
 
-    public OrderModel getOrderModel() {
-        return orderModel;
-    }
 
     public MealModel getMealModel() {
         return mealModel;
@@ -91,7 +82,7 @@ public class KioskService {
     }
 
     public Map<String, Map<String, Map<String, Long>>> getOrderStatistics() {
-        List<Order> orders = orderModel.getAllOrders();
+        List<Order> orders = orderService.getAllOrders();
         LocalDateTime startOfToday = LocalDateTime.now().toLocalDate().atStartOfDay();
         LocalDateTime startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay();
 

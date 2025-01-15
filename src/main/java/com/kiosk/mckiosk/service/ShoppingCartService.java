@@ -1,4 +1,4 @@
-package com.kiosk.mckiosk.model;
+package com.kiosk.mckiosk.service;
 
 import com.kiosk.mckiosk.model.entity.Order;
 import org.springframework.stereotype.Service;
@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ShoppingCartModel {
+public class ShoppingCartService {
 
-    public ShoppingCartModel() {
+    public ShoppingCartService() {
     }
 
     public void addToCart(Order order, String mealName) {

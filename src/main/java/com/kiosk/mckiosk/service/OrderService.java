@@ -1,4 +1,4 @@
-package com.kiosk.mckiosk.model;
+package com.kiosk.mckiosk.service;
 
 import com.kiosk.mckiosk.model.entity.Order;
 import com.kiosk.mckiosk.repository.OrderRepository;
@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OrderModel {
+public class OrderService {
     private final OrderRepository orderRepository;
 
-    public OrderModel(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 

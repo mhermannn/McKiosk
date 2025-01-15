@@ -7,6 +7,7 @@ import com.kiosk.mckiosk.model.enums.OrderPaymentType;
 import com.kiosk.mckiosk.model.enums.OrderStatus;
 import com.kiosk.mckiosk.model.enums.OrderType;
 import com.kiosk.mckiosk.service.KioskService;
+import com.kiosk.mckiosk.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,10 +26,12 @@ import static com.kiosk.mckiosk.model.enums.OrderStatus.NEW;
 public class ViewController {
 
     private final KioskService kioskService;
+    private final OrderService orderService;
 
     @Autowired
-    public ViewController(KioskService kioskService) {
+    public ViewController(KioskService kioskService, OrderService orderService) {
         this.kioskService = kioskService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/")
@@ -63,7 +66,7 @@ public class ViewController {
                     currentOrder.setOrderType(OrderType.TO_GO);
                 }
                 currentOrder.setOrderStatus(OrderStatus.IN_PROGRESS);
-                kioskService.getOrderModel().updateOrder(currentOrder.getOrderId(), currentOrder);
+                orderService.updateOrder(currentOrder.getOrderId(), currentOrder);
                 redirectAttributes.addFlashAttribute("message", "Typ zamówienia zmieniony na: " + currentOrder.getOrderType());
             } else {
                 redirectAttributes.addFlashAttribute("error", "Typ zamówienia jest nieprawidłowy.");
@@ -86,7 +89,7 @@ public class ViewController {
                 newOrder.setOrderStatus(NEW);
                 newOrder.setOrderType(OrderType.UNKNOWN);
                 newOrder.setOrderPaymentType(OrderPaymentType.UNKNOWN);
-                Order savedOrder = kioskService.getOrderModel().addOrder(newOrder);
+                Order savedOrder = orderService.addOrder(newOrder);
                 session.setAttribute("currentOrder", savedOrder);
             }
             return "orderType";
@@ -99,7 +102,7 @@ public class ViewController {
         Order currentOrder = (Order) session.getAttribute("currentOrder");
         if (currentOrder != null) {
             currentOrder.setOrderType(OrderType.valueOf(orderType.toUpperCase()));
-            kioskService.getOrderModel().updateOrder(currentOrder.getOrderId(), currentOrder);
+            orderService.updateOrder(currentOrder.getOrderId(), currentOrder);
         }
         return "redirect:/productlist";
     }
@@ -158,7 +161,7 @@ public class ViewController {
                 System.out.println(currentOrder.getOrderId());
                 currentOrder.getShoppingCart().add(meal.getName());
                 currentOrder.setOrderStatus(OrderStatus.IN_PROGRESS);
-                kioskService.getOrderModel().updateOrder(currentOrder.getOrderId(), currentOrder);
+                orderService.updateOrder(currentOrder.getOrderId(), currentOrder);
             }
             else {
                 System.out.println("currentOrder is null in addProductToCart ViewController");
@@ -174,7 +177,7 @@ public class ViewController {
             if (currentOrder != null) {
                 currentOrder.getShoppingCart().add(meal.getName());
                 currentOrder.setOrderStatus(OrderStatus.IN_PROGRESS);
-                kioskService.getOrderModel().updateOrder(currentOrder.getOrderId(), currentOrder);
+                orderService.updateOrder(currentOrder.getOrderId(), currentOrder);
             }
         });
         return "redirect:/shoppingcart";
