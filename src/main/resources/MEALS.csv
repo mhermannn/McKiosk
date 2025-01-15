@@ -3,7 +3,7 @@ id,name,category,price,ingredients
 2,CocaCola Zero 0.5L,COLD_DRINKS,3.49,"cola zero"
 3,chocoberry,HOT_DRINKS,2.29,"chocolate,strawberry syrup,milk"
 4,McChicker,BURGERS,5.99,"chicken patty,lettuce,tomato,onion,pickles,cheese,mayo"
-5,McWrap,WRAPS_SALADS,6.49,"chicken strips,tomato,cucumber,lettuce,cheese,ranch sauce"
+5,mcWrap,WRAPS_SALADS,6.69,"chicken strips,tomato,cucumber,lettuce,cheese,ranch sauce"
 6,Large Fries,FRIES_SIDES,2.99,"salt,ketchup"
 7,Nuggets,CHICKEN,4.49,"chicken"
 8,Big Mac,BURGERS,6.99,"beef patty,lettuce,onion,pickles,cheese,big mac sauce"

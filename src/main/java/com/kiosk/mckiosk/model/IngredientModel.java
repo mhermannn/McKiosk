@@ -1,15 +1,16 @@
 package com.kiosk.mckiosk.model;
 
 import com.kiosk.mckiosk.model.entity.Ingredient;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-
+@Component
 public class IngredientModel {
     private final List<Ingredient> ingredients = new ArrayList<>();
 
-    public Ingredient addIngredient(Ingredient ingredient) {// Auto-increment ID
+    public Ingredient addIngredient(Ingredient ingredient) {
         ingredients.add(ingredient);
         return ingredient;
     }

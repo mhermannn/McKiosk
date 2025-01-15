@@ -3,12 +3,13 @@ package com.kiosk.mckiosk.model;
 import com.kiosk.mckiosk.model.entity.Ingredient;
 import com.kiosk.mckiosk.model.entity.Meal;
 import com.kiosk.mckiosk.model.enums.MealCategories;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-
+@Component
 public class MealModel {
     private final List<Meal> meals = new ArrayList<>();
     private final IngredientModel ingredientModel;

@@ -34,7 +34,7 @@ public class ViewController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/")
+    @GetMapping({"/", "/welcome"})
     public String showHomePage() {
         return "welcome";
     }
