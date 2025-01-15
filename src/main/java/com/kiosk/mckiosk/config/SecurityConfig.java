@@ -54,6 +54,9 @@ public class SecurityConfig {
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/login")
                         .defaultSuccessUrl("/ordertype", true)
+                        .failureHandler((request, response, exception) -> {
+                            response.sendRedirect("/error?message=" + exception.getMessage());
+                        })
                 )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/welcome")
