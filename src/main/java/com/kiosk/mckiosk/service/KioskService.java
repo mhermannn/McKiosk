@@ -17,13 +17,15 @@ import java.util.stream.Collectors;
 @Service
 public class KioskService {
     private final IngredientModel ingredientModel = new IngredientModel();
-    private final MealModel mealModel = new MealModel(ingredientModel);
+    private final MealModel mealModel;
     private final UserModel userModel;
     private final OrderService orderService;
     @Autowired
-    public KioskService(UserModel userModel, OrderService orderService) {
+    public KioskService(UserModel userModel, OrderService orderService, List<Ingredient> ingredients) {
         this.userModel = userModel;
         this.orderService = orderService;
+        ingredients.forEach(ingredientModel::addIngredient);
+        this.mealModel = new MealModel(ingredientModel);
     }
 
     public UserModel getUserModel() {
@@ -61,22 +63,6 @@ public class KioskService {
                 mealModel.addMeal(meal);
             }
         } catch (IOException | IllegalArgumentException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void loadIngredientsFromCSV(String filePath) {
-        String line;
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            br.readLine();
-            while ((line = br.readLine()) != null) {
-                String[] data = line.split(",");
-                int id = Integer.parseInt(data[0]);
-                String name = data[1];
-                Ingredient ingredient = new Ingredient(id, name);
-                ingredientModel.addIngredient(ingredient);
-            }
-        } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
         }
     }
