@@ -1,5 +1,6 @@
 package com.kiosk.mckiosk.model.entity;
 
+import com.kiosk.mckiosk.config.EnumConstraint;
 import com.kiosk.mckiosk.model.enums.OrderPaymentType;
 import com.kiosk.mckiosk.model.enums.OrderStatus;
 import com.kiosk.mckiosk.model.enums.OrderType;
@@ -18,14 +19,18 @@ public class Order {
 
     private int customerId;
 
+    @EnumConstraint(enumClass = OrderType.class, message = "Invalid order type")
     @Enumerated(EnumType.STRING)
     private OrderType orderType;
 
+    @EnumConstraint(enumClass = OrderStatus.class, message = "Invalid order status")
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
+    @EnumConstraint(enumClass = OrderPaymentType.class, message = "Invalid payment type")
     @Enumerated(EnumType.STRING)
     private OrderPaymentType orderPaymentType;
+
 
     @ElementCollection
     @CollectionTable(name = "order_shopping_cart", joinColumns = @JoinColumn(name = "order_id"))

@@ -56,4 +56,9 @@ public class UserModel {
         }
         return false;
     }
+
+    public boolean matchesPassword(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
+
 }
