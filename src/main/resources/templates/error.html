@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Błąd</title>
+    <title>Error</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<h1>Coś poszło nie tak...</h1>
+<div th:replace="~{fragments :: header-logo}"></div>
+<h1>Something went wrong...</h1>
 <div th:if="${errorMessage}">
     <p class="error" th:text="${errorMessage}"></p>
 </div>
-<a href="/">Powrót do strony głównej</a>
-<a href="/login">Zaloguj się</a>
+<a href="/">Return to Homepage</a>
+<a href="/login">Log In</a>
 </body>
 </html>

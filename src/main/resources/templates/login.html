@@ -1,38 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>McKiosk - Logowanie</title>
+    <title>McKiosk - Login</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<div th:replace="~{fragments :: header}"></div>
+<div th:replace="~{fragments :: header-logo}"></div>
 
-<h1>Logowanie</h1>
+<h1>Login</h1>
 
-<!-- Logowanie za pomocą Google -->
+<!-- Login with Google -->
 <a href="/oauth2/authorization/google" style="display: block; margin-bottom: 20px;">
-    <button>Zaloguj się przez Google</button>
+    <button>Log in with Google</button>
 </a>
 
 <div th:if="${error}" style="color: red;">
     <p th:text="${error}"></p>
 </div>
 <div th:if="${param.error}" style="color: red;">
-    <p>Błędny login lub hasło!</p>
+    <p>Invalid username or password!</p>
 </div>
-<!-- Logowanie lokalne -->
+<!-- Local Login -->
 <div class="login-container">
     <form th:action="@{/login}" method="post">
-        <label for="username">Nazwa użytkownika</label>
-        <input type="text" id="username" name="username" placeholder="Wprowadź nazwę użytkownika" required>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required>
 
-        <label for="password">Hasło</label>
-        <input type="password" id="password" name="password" placeholder="Wprowadź hasło" required>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
 
-        <button type="submit">Zaloguj się</button>
+        <button type="submit">Log In</button>
     </form>
-
-
 </div>
 </body>
 </html>

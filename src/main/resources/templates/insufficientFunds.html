@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Brak środków</title>
+  <title>Insufficient Funds</title>
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-</div>
+<div th:replace="~{fragments :: header-logo}"></div>
 <div class="error-container">
-  <p class="error-message">Za mało środków na koncie.</p>
-  <p>Nowe zamówienie zostało utworzone i zawiera pozycje z poprzedniego koszyka.</p>
-  <a th:href="@{/productlist}">Wróć do listy produktów</a>
+  <p class="error-message">Insufficient funds in your account.</p>
+  <p>A new order has been created with items from your previous cart.</p>
+  <a th:href="@{/productlist}">Return to Product List</a>
 </div>
 </body>
 </html>

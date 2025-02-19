@@ -1,65 +1,158 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Panel Administratora</title>
+    <title>Admin Panel</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            margin: 20px 0;
+            color: #da291c;
+        }
+
+        h1 {
+            font-size: 2.5em;
+        }
+
+        h2 {
+            font-size: 2em;
+        }
+
+        h3 {
+            font-size: 1.75em;
+        }
+
+        h4 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        a {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background-color: #da291c;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #ffc72c;
+            color: #333;
+        }
+
+        /* Grid Layout for Statistics */
+        .stats-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .stats-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .stats-grid li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            font-size: 1.1em;
+        }
+
+        .stats-grid li span {
+            font-weight: bold;
+            color: #da291c;
+        }
+    </style>
 </head>
 <body>
-<div th:replace="~{fragments :: header}"></div>
-<h1>Panel Administratora</h1>
+<div th:replace="~{fragments :: header-full}"></div>
+<h1>Admin Panel</h1>
 
-<h2>Statystyki zamówień</h2>
+<h2>Order Statistics</h2>
 
-<h3>Dzisiaj</h3>
-<div>
-    <h4>Rodzaje płatności</h4>
-    <ul>
-        <li>KARTA: <span th:text="${orderStats['today']['paymentTypes']['CARD']}">0</span></li>
-        <li>GOTÓWKA: <span th:text="${orderStats['today']['paymentTypes']['CASH']}">0</span></li>
-        <li>PRZELEW: <span th:text="${orderStats['today']['paymentTypes']['TRANSFER']}">0</span></li>
-        <li>NIEZNANE: <span th:text="${orderStats['today']['paymentTypes']['UNKNOWN']}">0</span></li>
-    </ul>
+<div class="stats-container">
+    <!-- Today's Statistics -->
+    <div class="stats-section">
+        <h3>Today</h3>
+        <div>
+            <h4>Payment Types</h4>
+            <ul class="stats-grid">
+                <li>CARD: <span th:text="${orderStats['today']['paymentTypes']['CARD']}">0</span></li>
+                <li>CASH: <span th:text="${orderStats['today']['paymentTypes']['CASH']}">0</span></li>
+                <li>TRANSFER: <span th:text="${orderStats['today']['paymentTypes']['TRANSFER']}">0</span></li>
+                <li>UNKNOWN: <span th:text="${orderStats['today']['paymentTypes']['UNKNOWN']}">0</span></li>
+            </ul>
 
-    <h4>Statusy zamówień</h4>
-    <ul>
-        <li>ANULOWANE: <span th:text="${orderStats['today']['statuses']['CANCELLED']}">0</span></li>
-        <li>ZAKOŃCZONE: <span th:text="${orderStats['today']['statuses']['COMPLETED']}">0</span></li>
-        <li>W TRAKCIE: <span th:text="${orderStats['today']['statuses']['IN_PROGRESS']}">0</span></li>
-        <li>NOWE: <span th:text="${orderStats['today']['statuses']['NEW']}">0</span></li>
-    </ul>
+            <h4>Order Statuses</h4>
+            <ul class="stats-grid">
+                <li>CANCELLED: <span th:text="${orderStats['today']['statuses']['CANCELLED']}">0</span></li>
+                <li>COMPLETED: <span th:text="${orderStats['today']['statuses']['COMPLETED']}">0</span></li>
+                <li>IN PROGRESS: <span th:text="${orderStats['today']['statuses']['IN_PROGRESS']}">0</span></li>
+                <li>NEW: <span th:text="${orderStats['today']['statuses']['NEW']}">0</span></li>
+            </ul>
 
-    <h4>Typy zamówień</h4>
-    <ul>
-        <li>NA MIEJSCU: <span th:text="${orderStats['today']['orderTypes']['ON_SITE']}">0</span></li>
-        <li>NA WYNOS: <span th:text="${orderStats['today']['orderTypes']['TO_GO']}">0</span></li>
-    </ul>
+            <h4>Order Types</h4>
+            <ul class="stats-grid">
+                <li>ON SITE: <span th:text="${orderStats['today']['orderTypes']['ON_SITE']}">0</span></li>
+                <li>TO GO: <span th:text="${orderStats['today']['orderTypes']['TO_GO']}">0</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- This Month's Statistics -->
+    <div class="stats-section">
+        <h3>This Month</h3>
+        <div>
+            <h4>Payment Types</h4>
+            <ul class="stats-grid">
+                <li>CARD: <span th:text="${orderStats['month']['paymentTypes']['CARD']}">0</span></li>
+                <li>CASH: <span th:text="${orderStats['month']['paymentTypes']['CASH']}">0</span></li>
+                <li>TRANSFER: <span th:text="${orderStats['month']['paymentTypes']['TRANSFER']}">0</span></li>
+                <li>UNKNOWN: <span th:text="${orderStats['month']['paymentTypes']['UNKNOWN']}">0</span></li>
+            </ul>
+
+            <h4>Order Statuses</h4>
+            <ul class="stats-grid">
+                <li>CANCELLED: <span th:text="${orderStats['month']['statuses']['CANCELLED']}">0</span></li>
+                <li>COMPLETED: <span th:text="${orderStats['month']['statuses']['COMPLETED']}">0</span></li>
+                <li>IN PROGRESS: <span th:text="${orderStats['month']['statuses']['IN_PROGRESS']}">0</span></li>
+                <li>NEW: <span th:text="${orderStats['month']['statuses']['NEW']}">0</span></li>
+            </ul>
+
+            <h4>Order Types</h4>
+            <ul class="stats-grid">
+                <li>ON SITE: <span th:text="${orderStats['month']['orderTypes']['ON_SITE']}">0</span></li>
+                <li>TO GO: <span th:text="${orderStats['month']['orderTypes']['TO_GO']}">0</span></li>
+            </ul>
+        </div>
+    </div>
 </div>
 
-<h3>W tym miesiącu</h3>
-<div>
-    <h4>Rodzaje płatności</h4>
-    <ul>
-        <li>KARTA: <span th:text="${orderStats['month']['paymentTypes']['CARD']}">0</span></li>
-        <li>GOTÓWKA: <span th:text="${orderStats['month']['paymentTypes']['CASH']}">0</span></li>
-        <li>PRZELEW: <span th:text="${orderStats['month']['paymentTypes']['TRANSFER']}">0</span></li>
-        <li>NIEZNANE: <span th:text="${orderStats['month']['paymentTypes']['UNKNOWN']}">0</span></li>
-    </ul>
-
-    <h4>Statusy zamówień</h4>
-    <ul>
-        <li>ANULOWANE: <span th:text="${orderStats['month']['statuses']['CANCELLED']}">0</span></li>
-        <li>ZAKOŃCZONE: <span th:text="${orderStats['month']['statuses']['COMPLETED']}">0</span></li>
-        <li>W TRAKCIE: <span th:text="${orderStats['month']['statuses']['IN_PROGRESS']}">0</span></li>
-        <li>NOWE: <span th:text="${orderStats['month']['statuses']['NEW']}">0</span></li>
-    </ul>
-
-    <h4>Typy zamówień</h4>
-    <ul>
-        <li>NA MIEJSCU: <span th:text="${orderStats['month']['orderTypes']['ON_SITE']}">0</span></li>
-        <li>NA WYNOS: <span th:text="${orderStats['month']['orderTypes']['TO_GO']}">0</span></li>
-    </ul>
-</div>
-
-<a th:href="@{/productlist}">Wróć do listy produktów</a>
+<a th:href="@{/productlist}">Back to Product List</a>
 </body>
 </html>

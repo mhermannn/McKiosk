@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Szczegóły posiłku</title>
+    <title>Meal Details</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<div th:replace="~{fragments :: header}"></div>
+<div th:replace="~{fragments :: header-logo}"></div>
 
-<h1 th:text="${meal.name}">Nazwa posiłku</h1>
-<p>Kategoria: <span th:text="${meal.category}"></span></p>
-<p>Cena: <span th:text="${meal.price}"></span></p>
+<h1 th:text="${meal.name}">Meal Name</h1>
+<img th:src="@{/images/{id}.jpg(id=${meal.id})}" alt="Meal Image" class="meal-image">
+<p>Category: <span th:text="${meal.category}"></span></p>
+<p>Price: <span th:text="${meal.price}"></span></p>
 
-<h2>Składniki:</h2>
+<h2>Ingredients:</h2>
 <ul>
     <li th:each="ingredient : ${meal.ingredients}" th:text="${ingredient.name}"></li>
 </ul>
 
 <form action="/productlist/add" method="post">
     <input type="hidden" name="mealId" th:value="${meal.id}">
-    <button type="submit">Dodaj do koszyka</button>
+    <button type="submit">Add to Cart</button>
 </form>
 <div sec:authorize="hasRole('ROLE_ADMIN')">
-    <a th:href="@{/meal/{id}/editMeal(id=${meal.id})}">Edytuj posiłek</a>
+    <a th:href="@{/meal/{id}/editMeal(id=${meal.id})}">Edit Meal</a>
 </div>
 </body>
 </html>

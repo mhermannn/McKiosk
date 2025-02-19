@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Koszyk</title>
+    <title>Shopping Cart</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<div th:replace="~{fragments :: header}"></div>
+<div th:replace="~{fragments :: header-logo}"></div>
 
-<h1>Koszyk</h1>
-<a th:href="@{/productlist}">Wróć do listy produktów</a>
+<h1>Shopping Cart</h1>
+<a th:href="@{/productlist}">Back to Product List</a>
 <div class="cart-container">
     <div th:if="${shoppingCart.isEmpty()}">
-        <p>Twój koszyk jest pusty. <a th:href="@{/productlist}">Wróć do listy produktów</a></p>
+        <p>Your cart is empty. <a th:href="@{/productlist}">Back to Product List</a></p>
     </div>
     <div th:if="${!shoppingCart.isEmpty()}">
         <div th:each="mealName : ${shoppingCart}" class="cart-item">
             <p><strong th:text="${mealName}"></strong></p>
             <form th:action="@{/shoppingcart/remove}" method="post">
                 <input type="hidden" name="mealName" th:value="${mealName}" />
-                <button type="submit">Usuń</button>
+                <button type="submit">Remove</button>
             </form>
         </div>
     </div>
 
     <div class="cart-summary" th:if="${!shoppingCart.isEmpty()}">
         <form th:action="@{/shoppingcart/clear}" method="post" style="display: inline-block;">
-            <button type="submit">Wyczyść koszyk</button>
+            <button type="submit">Clear Cart</button>
         </form>
         <form th:action="@{/shoppingcart/checkout}" method="post" style="display: inline-block;">
-            <button type="submit">Potwierdź zamówienie</button>
+            <button type="submit">Confirm Order</button>
         </form>
     </div>
 </div>

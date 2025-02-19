@@ -1,14 +1,49 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <title>Fragments</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<div th:fragment="header">
-    <header>
-        <h1>McDonalds</h1>
-        <a th:href="@{/}">Powrót do strony głównej</a>
+
+<div th:fragment="header-logo">
+    <header style="background-color: #da291c; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+        <a th:href="@{/}" style="text-decoration: none; color: #fff; font-size: 1.5em; font-weight: bold; transition: color 0.3s ease;">
+            <img src="/images/logo.svg" alt="Logo" class="logo" style="width: 120px; height: auto; display: block;">
+        </a>
+    </header>
+</div>
+
+<div th:fragment="header-full">
+    <header style="background-color: #da291c; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+        <a th:href="@{/}" style="text-decoration: none; color: #fff; font-size: 1.5em; font-weight: bold; transition: color 0.3s ease;">
+            <img src="/images/logo.svg" alt="Logo" class="logo" style="width: 120px; height: auto; display: block;">
+        </a>
+
+        <div class="header-right" style="display: flex; align-items: center; gap: 20px;">
+            <div th:if="${loggedUser != null and loggedUser != 'Nie jesteś zalogowany'}">
+                <p style="margin: 0; color: #fff; font-size: 1.3em;">Logged in as: <span th:text="${loggedUser}"></span></p>
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{/adminPage}" class="button" style="background-color: #da291c; color: #fff; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-size: 1.2em; transition: background-color 0.3s ease; display: inline-block; margin: 10px 5px; text-align: center;">Admin Page</a>
+                </div>
+                <p style="margin: 0; color: #fff; font-size: 1.3em;">Cart: <span th:text="${cartSize}"></span></p>
+                <form th:action="@{/logout}" method="post" style="display: inline;">
+                    <button type="submit" class="button" style="background-color: #da291c; color: #fff; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-size: 1.2em; transition: background-color 0.3s ease; display: inline-block; margin: 10px 5px; text-align: center;">Log Out</button>
+                </form>
+                <div class="shopping-cart-link" style="display: inline;">
+                    <a href="/shoppingcart" class="button" style="background-color: #da291c; color: #fff; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-size: 1.2em; transition: background-color 0.3s ease; display: inline-block; margin: 10px 5px; text-align: center;">Go to Cart</a>
+                </div>
+                <form method="post" action="/changeOrderType" style="display: inline;">
+                    <button type="submit" class="button" style="background-color: #da291c; color: #fff; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-size: 1.2em; transition: background-color 0.3s ease; display: inline-block; margin: 10px 5px; text-align: center;">Change Order Type</button>
+                </form>
+                <h4 th:if="${orderType != null}" style="margin: 0; color: #fff; font-size: 1.3em;">Order Type: <span th:text="${orderType}"></span></h4>
+            </div>
+
+            <div th:if="${loggedUser == null or loggedUser == 'Nie jesteś zalogowany'}">
+                <p style="margin: 0; color: #fff; font-size: 1.3em;">You are not logged in</p>
+                <a th:href="@{/login}" class="button" style="background-color: #da291c; color: #fff; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-size: 1.2em; transition: background-color 0.3s ease; display: inline-block; margin: 10px 5px; text-align: center;">Log In</a>
+            </div>
+        </div>
     </header>
 </div>
 

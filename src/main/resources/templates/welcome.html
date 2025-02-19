@@ -5,23 +5,27 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<div>
-    <h1>Welcome to McDonalds!</h1>
-    <a th:href="@{/login}">Zaloguj się</a>
-    <a th:href="@{/productlist}">Zobacz produkty</a>
+<div th:replace="~{fragments :: header-logo}"></div>
+<div class="welcome-container" style="text-align: center; padding: 50px;">
+
+    <a href="https://mcdonalds.pl/aplikacja-mobilna/" target="_blank" style="display: block; margin-top: 50px;">
+        <img src="/images/reklama.jpg" alt="McDonalds Ad" style="width: 80%; max-width: 600px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+    </a>
+
+    <a th:href="@{/login}" style="font-size: 2.5rem; color: #fff; background-color: #da291c; padding: 20px 40px; border-radius: 10px; text-decoration: none; display: inline-block; margin: 20px;">
+        Log In
+    </a>
+    <br>
+    <a th:href="@{/productlist}" style="font-size: 2.5rem; color: #fff; background-color: #da291c; padding: 20px 40px; border-radius: 10px; text-decoration: none; display: inline-block; margin: 20px;">
+        View Products
+    </a>
 
     <div th:if="${message}">
-        <p class="success" th:text="${message}"></p>
+        <p class="success" th:text="${message}" style="font-size: 2rem; color: green; margin-top: 30px;"></p>
     </div>
     <div th:if="${error}">
-        <p class="error" th:text="${error}"></p>
+        <p class="error" th:text="${error}" style="font-size: 2rem; color: red; margin-top: 30px;"></p>
     </div>
 </div>
-
-
-<a href="https://mcdonalds.pl/aplikacja-mobilna/" target="_blank">
-    <img src="/images/reklama.jpg" alt="Reklama McDonalds" style="width:300px; height:auto;">
-</a>
-
 </body>
 </html>
